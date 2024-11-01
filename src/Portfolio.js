@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, User, Mail, Github, Linkedin } from 'lucide-react';
 
 const Portfolio = () => {
+  useEffect(() => {
+    document.title = 'Vishnu\'s Portfolio';
+  }, []);
+
   const [currentPage, setCurrentPage] = useState('about');
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
 
-  const projects = {
+  const projects = {    
     mechanical: [
       { title: "Automated Assembly Line", description: "Designed and implemented robotic assembly system", image: "/api/placeholder/600/400" },
       { title: "Industrial Robot Arm", description: "Custom 6-DOF robotic arm design", image: "/api/placeholder/600/400" }
