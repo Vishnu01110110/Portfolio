@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, User, Mail, Github, Linkedin } from 'lucide-
 
 const Portfolio = () => {
   useEffect(() => {
-    document.title = 'Vishnu\'s Portfolio';
+    document.title = "Vishnu Vardhan Badam's Portfolio";
   }, []);
 
   const [currentPage, setCurrentPage] = useState('about');
@@ -43,7 +43,7 @@ const Portfolio = () => {
       {/* Navigation */}
       <nav className="bg-white shadow-md p-4">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">Your Name</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Vishnu Vardhan Badam</h1>
           <div className="space-x-4">
             <button 
               onClick={() => setCurrentPage('about')}
@@ -69,30 +69,42 @@ const Portfolio = () => {
               <div className="flex items-center space-x-4 mb-6">
                 <img src="/api/placeholder/150/150" alt="Profile" className="rounded-full w-24 h-24" />
                 <div>
-                  <h2 className="text-2xl font-bold">Your Name</h2>
+                  <h2 className="text-2xl font-bold">Vishnu</h2>
                   <p className="text-gray-600">Robotics Engineer</p>
                 </div>
               </div>
               <div className="space-y-4">
                 <p className="text-gray-700">
-                  Experienced robotics engineer specializing in automation, machine learning, and robotic systems design.
+                  Passionate robotics engineer with a keen interest in automation, machine learning, and robotic systems design. Always excited to learn and create innovative solutions.
                 </p>
                 <div className="flex space-x-4">
-                  <Mail className="w-5 h-5 text-gray-600" />
-                  <Github className="w-5 h-5 text-gray-600" />
-                  <Linkedin className="w-5 h-5 text-gray-600" />
+                  <a href="mailto:vishnuvardhan.badam@gmail.com" className="hover:text-blue-500">
+                    <Mail className="w-5 h-5 text-gray-600" />
+                  </a>
+                  <a href="https://github.com/Vishnu01110110" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">
+                    <Github className="w-5 h-5 text-gray-600" />
+                  </a>
+                  <a href="https://www.linkedin.com/in/badam-vishnu-vardhan/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">
+                    <Linkedin className="w-5 h-5 text-gray-600" />
+                  </a>
                 </div>
               </div>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-4">Experience</h3>
+              <h3 className="text-xl font-bold mb-4">Skills & Interests</h3>
               <div className="space-y-4">
                 <div className="border-l-2 border-blue-500 pl-4">
-                  <h4 className="font-semibold">Senior Robotics Engineer</h4>
-                  <p className="text-gray-600">Company Name • 2020-Present</p>
-                  <p className="text-sm text-gray-700">Led development of autonomous systems</p>
+                  <h4 className="font-semibold">Technical Skills</h4>
+                  <p className="text-sm text-gray-700">Robotics Programming • Machine Learning • Computer Vision • Automation</p>
                 </div>
-                {/* Add more experience items */}
+                <div className="border-l-2 border-green-500 pl-4">
+                  <h4 className="font-semibold">Tools & Technologies</h4>
+                  <p className="text-sm text-gray-700">ROS • Python • C++ • TensorFlow • OpenCV</p>
+                </div>
+                <div className="border-l-2 border-purple-500 pl-4">
+                  <h4 className="font-semibold">Interests</h4>
+                  <p className="text-sm text-gray-700">Autonomous Systems • Mechanical Design • AI in Robotics • Cooking </p>
+                </div>
               </div>
             </div>
           </div>
