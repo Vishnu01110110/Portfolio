@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { User, Mail, Github, Linkedin, FileText } from 'lucide-react';
 import ProjectsPage from './ProjectsPage';
-import ProjectDetails from './ProjectDetails';
 
 const Portfolio = () => {
-  const [currentPage, setCurrentPage] = useState('about');
-  const [profileImageError, setProfileImageError] = useState(false);
   const baseUrl = process.env.PUBLIC_URL || '';
   const profileImagePath = `${baseUrl}/profile.jpg`;
+
+  const [currentPage, setCurrentPage] = useState('about');
+  const [profileImageError, setProfileImageError] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,27 +50,34 @@ const Portfolio = () => {
                 </div>
               </div>
             </div>
+            {/* Skills section */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-4">Skills & Interests</h3>
               <div className="space-y-4">
                 <div className="border-l-2 border-blue-500 pl-4">
                   <h4 className="font-semibold">Technical Skills</h4>
-                  <p className="text-sm text-gray-700">Robotics Programming • Machine Learning • Computer Vision • Automation</p>
-                </div>
+                  <p className="text-sm text-gray-700">Computer-Aided Design • Computer Vision and Perception • Machine Learning • Machining • Controls • Robotics Programming • Automation</p>
+                  </div>  
                 <div className="border-l-2 border-green-500 pl-4">
                   <h4 className="font-semibold">Tools & Technologies</h4>
-                  <p className="text-sm text-gray-700">ROS • Python • C++ • TensorFlow • OpenCV</p>
+                  <p className="text-sm text-gray-700">ROS • Python • C++ • Arduino IDE • MATLAB • Git • SQL • Fusion360 • SolidWorks • Ansys • TensorFlow • OpenCV</p>
                 </div>
                 <div className="border-l-2 border-purple-500 pl-4">
+                  <h4 className="font-semibold">Knowledge Areas</h4>
+                  <p className="text-sm text-gray-700">Computer-Aided Design • Computer Vision and Perception • Machine Learning • Machining • Controls • Manufacturing Automation</p>
+                </div>
+                <div className="border-l-2 border-orange-500 pl-4">
                   <h4 className="font-semibold">Interests</h4>
-                  <p className="text-sm text-gray-700">Autonomous Systems • Mechanical Design • AI in Robotics • Cooking</p>
+                  <p className="text-sm text-gray-700">New Product Development • Autonomous Systems • Mechanical Design • AI in Robotics • Manufacturing Automation • Cooking</p>
                 </div>
               </div>
             </div>
           </div>
         );
+      
       case 'projects':
         return <ProjectsPage />;
+      
       case 'resume':
         return (
           <div className="bg-white p-6 rounded-lg shadow-md">
@@ -99,6 +106,8 @@ const Portfolio = () => {
                   <span>Download PDF</span>
                 </a>
               </div>
+
+              {/* Education Section */}
               <section className="mb-8">
                 <h3 className="text-xl font-bold mb-4 text-blue-600">Education</h3>
                 <div className="space-y-4">
@@ -117,6 +126,7 @@ const Portfolio = () => {
                 </div>
               </section>
 
+              {/* Work Experience Section */}
               <section className="mb-8">
                 <h3 className="text-xl font-bold mb-4 text-blue-600">Work Experience</h3>
                 <div className="space-y-6">
@@ -148,6 +158,7 @@ const Portfolio = () => {
                 </div>
               </section>
 
+              {/* Academic Projects & Leadership Section */}
               <section>
                 <h3 className="text-xl font-bold mb-4 text-blue-600">Academic Projects & Leadership</h3>
                 <div className="space-y-4">
@@ -171,6 +182,7 @@ const Portfolio = () => {
             </div>
           </div>
         );
+      
       default:
         return null;
     }
@@ -205,10 +217,7 @@ const Portfolio = () => {
       </nav>
 
       <main className="max-w-6xl mx-auto p-4 md:p-8">
-        <Routes>
-          <Route path="/" element={renderContent()} />
-          <Route path="/projects/:id" element={<ProjectDetails />} />
-        </Routes>
+        {renderContent()}
       </main>
     </div>
   );
