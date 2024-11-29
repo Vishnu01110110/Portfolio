@@ -4,7 +4,7 @@ export const projects = {
         id: 'robot-whip-mechanism',
         title: 'Novel Whip-like Linkage Mechanism (Do not review this project for 24696 )',
         description: 'Automated battery removal system for Apple Daisy',
-        image: '/api/placeholder/600/400',
+        image: 'https://placehold.co/600x400/2563eb/ffffff?text=Robot+Control+System',
         technologies: ['ROS', 'UR5', 'CAD', 'Motion Planning'],
         overview: 'Project details coming up',
         features: [
@@ -18,7 +18,7 @@ export const projects = {
         id: 'digital-twin-vehicle',
         title: 'Mitigating Risks in Vehicles - A Digital Twin Framework Study',
         description: 'IoT-based vehicle safety system using multi-layered communication approach',
-        image: '/images/digital-twin.jpg',
+        image: 'https://placehold.co/600x400/2563eb/ffffff?text=Digital+Twin',
         technologies: ['IoT', 'Arduino', 'Li-Fi', 'GPS', 'ThingSpeak', 'ESP8266'],
         objective: 'Traditional vehicle safety systems face unique challenges in countries like India, where road rules are often loosely interpreted and excessive honking is deeply ingrained in driving culture. The cacophony of constant honking creates noise pollution and reduces the effectiveness of audio-based warning systems. While similar projects have attempted to tackle road safety through conventional means, our approach develops an alternative communication framework that reduces reliance on audio signals, making it particularly suitable for high-noise traffic environments.',
         methodology: {
@@ -85,7 +85,7 @@ export const projects = {
         id: '3d-vision-assistant',
         title: 'Multi-functional 3D Printing Computer Vision Assistant',
         description: 'End-to-end computer vision system for automated 3D printing preparation',
-        image: '/images/3d-vision.jpg',
+        image: 'https://placehold.co/600x400/2563eb/ffffff?text=Computer+Vision',
         technologies: ['Python', 'OpenCV', 'AI', 'Computer Vision', '2D to 3D image processing'],
         objective: '3D printing technology faces significant challenges in accurately replicating objects from real-world references. Traditional methods often struggle with precise scale detection, feature size identification, and overhang detection. This project develops an end-to-end computer vision assistant that addresses these challenges by creating an integrated framework for automated 3D printing preparation, making the technology more accessible and reliable for users without extensive technical expertise.',
         methodology: {
@@ -151,7 +151,7 @@ export const projects = {
         id: 'adaptive-conveyor-control',
         title: 'Adaptive Conveyor Control for Material Sorting',
         description: 'Intelligent control system for optimizing material sorting efficiency in recycling facilities',
-        image: '/images/conveyor-control.jpg',
+        image: 'https://placehold.co/600x400/2563eb/ffffff?text=Manufacturing+System',
         technologies: ['Controls', 'Robotics', 'Perception', 'Python', 'ROS', 'YOLOv8', 'MPC'],
         objective: 'Efficient material sorting in Material Recovery Facilities (MRFs) is critical to recycling operations but faces challenges like varying material flow rates and limited adaptability of existing systems. This project aims to develop an adaptive control system for conveyor belts that optimizes sorting efficiency using real-time computer vision and model predictive control. The system provides a scalable, intelligent solution for improving sorting accuracy and operational efficiency in MRFs.',
         methodology: {
@@ -215,7 +215,7 @@ export const projects = {
         id: 'diffusion-qr-imagery',
         title: 'Advancing Visual Engagement through Text-Based Diffusion-Generated Imagery',
         description: 'AI-powered system combining text-to-image generation with functional QR code integration',
-        image: '/images/diffusion-qr.jpg',
+        image: 'https://placehold.co/600x400/2563eb/ffffff?text=Diffusion+QR',
         technologies: ['Python', 'PyTorch', 'Stable Diffusion', 'OpenCV', 'CLIP', 'Deep Learning'],
         objective: 'The integration of textual descriptions with visual creativity has unlocked remarkable potential in generative AI. This project explores the use of advanced diffusion models to create visually striking images based on textual input while seamlessly embedding functional QR codes. By adapting and enhancing latent diffusion models with cross-attention mechanisms, the project achieves a sophisticated translation of text to images, ensuring high fidelity and alignment with semantic input. The integration of QR codes via targeted inpainting and OpenCV methods introduces a novel dimension, merging aesthetics with digital functionality for new-age branding and audience engagement.',
         methodology: {
