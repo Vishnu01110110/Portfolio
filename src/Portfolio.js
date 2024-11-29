@@ -8,6 +8,9 @@ const Portfolio = () => {
 
   const [currentPage, setCurrentPage] = useState('about');
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  const [profileImageError, setProfileImageError] = useState(false);
+  const baseUrl = process.env.PUBLIC_URL || '';
+  const profileImagePath = `${baseUrl}/profile.jpg`;
 
   const projects = {    
     mechanical: [
@@ -72,11 +75,11 @@ const Portfolio = () => {
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="flex items-center space-x-4 mb-6">
                 <img 
-                    src={`${process.env.PUBLIC_URL}/profile.jpg`} 
+                    src={profileImageError ? "/api/placeholder/150/150" : profileImagePath}
                     alt="Profile" 
                     className="rounded-full w-24 h-24"
                     onError={(e) => {
-                      e.target.src = "/api/placeholder/150/150"  // Fallback to placeholder
+                      setProfileImageError(true);
                     }} 
                   />
                 <div>
@@ -170,17 +173,22 @@ const Portfolio = () => {
             <div className="mb-8">
               <div className="flex justify-between items-center mb-6">
                 <a 
-                  href={`${process.env.PUBLIC_URL}/resume.pdf`} 
+                  href={`${baseUrl}/resume.pdf`} 
                   download="Vishnu_Vardhan_Badam_Resume.pdf"
                   className="bg-blue-500 text-white px-4 py-2 rounded flex items-center space-x-2 hover:bg-blue-600"
                   onClick={(e) => {
-                    // Prevent download if file doesn't exist
-                    fetch('/resume.pdf').then(response => {
-                      if (!response.ok) {
-                        e.preventDefault();
-                        alert('Resume file is not available');
-                      }
-                    });
+                    e.preventDefault();
+                    fetch(`${baseUrl}/resume.pdf`)
+                      .then(response => {
+                        if (response.ok) {
+                          window.location.href = `${baseUrl}/resume.pdf`;
+                        } else {
+                          alert('Resume file is not available yet. Please check back later.');
+                        }
+                      })
+                      .catch(error => {
+                        alert('Unable to download resume. Please try again later.');
+                      });
                   }}
                 >
                   <FileText className="w-5 h-5" />
