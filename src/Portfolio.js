@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import { User, Mail, Github, Linkedin, FileText, Sun, Moon, Send } from 'lucide-react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { User, Mail, Github, Linkedin, FileText, Sun, Moon, Send, Phone } from 'lucide-react';
 import ProjectsPage from './ProjectsPage';
 import ModernToggle from './components/ModernToggle';
 
-const Portfolio = () => {
+const Portfolio = ({ children }) => {
   const baseUrl = process.env.PUBLIC_URL || '';
   const profileImagePath = `${baseUrl}/profile.jpg`;
 
   const [currentPage, setCurrentPage] = useState('about');
   const [profileImageError, setProfileImageError] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
@@ -31,45 +32,58 @@ const Portfolio = () => {
         return (
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md flex flex-col h-full">
-              <div className="flex items-center space-x-4 mb-6">
-                <img 
-                  src={profileImageError ? "/api/placeholder/150/150" : profileImagePath}
-                  alt="Profile" 
-                  className="rounded-full w-24 h-24"
-                  onError={() => setProfileImageError(true)} 
-                />
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Vishnu</h2>
-                  <p className="text-gray-600 dark:text-gray-300">Engineer</p>
+              <div className="flex-grow">
+                <div className="flex items-center space-x-4 mb-6">
+                  <img 
+                    src={profileImageError ? "/api/placeholder/150/150" : profileImagePath}
+                    alt="Profile" 
+                    className="rounded-full w-24 h-24"
+                    onError={() => setProfileImageError(true)} 
+                  />
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Vishnu</h2>
+                    <p className="text-gray-600 dark:text-gray-300">Engineer</p>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <p className="text-gray-700 dark:text-gray-300">
+                    Hi, I'm Vishnu, a passionate robotics engineer with a keen interest in automation, machine learning, and robotic systems design. Always excited to learn and create innovative solutions. They say engineers love fixing things, but honestly, I'm just trying to break fewer things each day.
+                  </p>
                 </div>
               </div>
-              <div className="space-y-4">
-                <p className="text-gray-700 dark:text-gray-300">
-                  Hi, I'm Vishnu, a passionate robotics engineer with a keen interest in automation, machine learning, and robotic systems design. Always excited to learn and create innovative solutions. They say engineers love fixing things, but honestly, I'm just trying to break fewer things each day.
-                </p>
-              </div>
-              <div className="flex justify-end space-x-4 mt-4">
+
+              <div className="flex justify-center flex-wrap gap-4 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <a 
                   href="mailto:vishnuvardhan.badam@gmail.com" 
-                  className="hover:text-blue-500 transition-colors duration-200"
+                  className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors duration-200"
                 >
-                  <Mail className="w-5 h-5 text-gray-600 dark:text-gray-300 hover:text-blue-500" />
+                  <Mail className="w-5 h-5" />
+                  <span>Email</span>
+                </a>
+                <a 
+                  href="tel:+4123909259" 
+                  className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors duration-200"
+                >
+                  <Phone className="w-5 h-5" />
+                  <span>+412 390 9259</span>
                 </a>
                 <a 
                   href="https://github.com/Vishnu01110110" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="hover:text-blue-500 transition-colors duration-200"
+                  className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors duration-200"
                 >
-                  <Github className="w-5 h-5 text-gray-600 dark:text-gray-300 hover:text-blue-500" />
+                  <Github className="w-5 h-5" />
+                  <span>GitHub</span>
                 </a>
                 <a 
                   href="https://www.linkedin.com/in/badam-vishnu-vardhan/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="hover:text-blue-500 transition-colors duration-200"
+                  className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors duration-200"
                 >
-                  <Linkedin className="w-5 h-5 text-gray-600 dark:text-gray-300 hover:text-blue-500" />
+                  <Linkedin className="w-5 h-5" />
+                  <span>LinkedIn</span>
                 </a>
               </div>
             </div>
@@ -211,6 +225,14 @@ const Portfolio = () => {
     }
   };
 
+  // Helper function to determine if a path is active
+  const isActivePath = (path) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(path);
+  };
+
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
       <nav className="bg-white dark:bg-gray-800 shadow-md p-4 sticky top-0 z-10">
@@ -218,9 +240,12 @@ const Portfolio = () => {
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Vishnu Vardhan Badam</h1>
           <div className="flex items-center space-x-4">
             <button 
-              onClick={() => setCurrentPage('about')}
+              onClick={() => {
+                navigate('/');
+                setCurrentPage('about');
+              }}
               className={`px-4 py-2 rounded ${
-                currentPage === 'about' 
+                isActivePath('/') && !isActivePath('/projects')
                   ? 'bg-blue-500 text-white' 
                   : 'text-gray-600 dark:text-gray-300'
               }`}
@@ -228,14 +253,28 @@ const Portfolio = () => {
               About
             </button>
             <button 
-              onClick={() => setCurrentPage('projects')}
-              className={`px-4 py-2 rounded ${currentPage === 'projects' ? 'bg-blue-500 text-white' : 'text-gray-600 dark:text-gray-300'}`}
+              onClick={() => {
+                navigate('/projects');
+                setCurrentPage('projects');
+              }}
+              className={`px-4 py-2 rounded ${
+                isActivePath('/projects') 
+                  ? 'bg-blue-500 text-white' 
+                  : 'text-gray-600 dark:text-gray-300'
+              }`}
             >
               Projects
             </button>
             <button 
-              onClick={() => setCurrentPage('resume')}
-              className={`px-4 py-2 rounded ${currentPage === 'resume' ? 'bg-blue-500 text-white' : 'text-gray-600 dark:text-gray-300'}`}
+              onClick={() => {
+                navigate('/resume');
+                setCurrentPage('resume');
+              }}
+              className={`px-4 py-2 rounded ${
+                isActivePath('/resume') 
+                  ? 'bg-blue-500 text-white' 
+                  : 'text-gray-600 dark:text-gray-300'
+              }`}
             >
               Resume
             </button>
@@ -247,28 +286,29 @@ const Portfolio = () => {
       </nav>
 
       <main className="max-w-6xl mx-auto p-4 md:p-8">
-        {renderContent()}
-        {currentPage === 'about' && <div className="h-20" />} {/* Spacer only on 'hi' page */}
+        {(location.pathname === '/' || location.pathname === '/resume') && renderContent()}
+        {location.pathname !== '/' && location.pathname !== '/resume' && children}
+        {currentPage === 'about' && location.pathname === '/' && <div className="h-20" />}
       </main>
 
-      {currentPage === 'about' && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg p-4">
-          <div className="max-w-2xl mx-auto flex justify-center items-center space-x-4">
-            <span className="text-lg font-medium text-gray-700 dark:text-gray-200">
-              Always excited to chat—be it about tech, robotics, or just life!
-            </span>
-            <a
-              href="https://www.linkedin.com/messaging/compose/?to=badam-vishnu-vardhan"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 
-                       text-white font-medium rounded-lg transition-colors duration-200"
-            >
-              <span>Say Hi</span>
-              <Send className="ml-2 h-6 w-6" />
-            </a>
+      {currentPage === 'about' && location.pathname === '/' && (
+          <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg p-4">
+            <div className="max-w-2xl mx-auto flex justify-center items-center space-x-4">
+              <span className="text-lg font-medium text-gray-700 dark:text-gray-200">
+                Always excited to chat—be it about tech, robotics, or just life!
+              </span>
+              <a
+                href="https://www.linkedin.com/messaging/compose/?to=badam-vishnu-vardhan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 
+                         text-white font-medium rounded-lg transition-colors duration-200"
+              >
+                <span>Say Hi</span>
+                <Send className="ml-2 h-6 w-6" />
+              </a>
+            </div>
           </div>
-        </div>
       )}
     </div>
   );

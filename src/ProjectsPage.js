@@ -40,8 +40,8 @@ const ProjectsPage = () => {
   };
 
   return (
-    <div className="space-y-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {categories.map((category) => {
           const Icon = category.icon;
           return (
@@ -51,15 +51,15 @@ const ProjectsPage = () => {
                 setCurrentCategory(category.id);
                 setCurrentIndex(0);
               }}
-              className={`bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow
+              className={`bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow
                 border-l-4 ${category.color === 'blue' ? 'border-blue-500' : 'border-purple-500'}
                 ${currentCategory === category.id ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}
             >
-              <div className="flex items-center space-x-4">
-                <Icon className={`w-8 h-8 ${category.color === 'blue' ? 'text-blue-500' : 'text-purple-500'}`} />
+              <div className="flex items-center space-x-3">
+                <Icon className={`w-6 h-6 ${category.color === 'blue' ? 'text-blue-500' : 'text-purple-500'}`} />
                 <div className="text-left">
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-white">{category.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">{category.description}</p>
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-white">{category.title}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">{category.description}</p>
                 </div>
               </div>
             </button>
@@ -67,48 +67,63 @@ const ProjectsPage = () => {
         })}
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+      <div className="flex justify-center">
+        <button
+          onClick={() => navigate('/projects/all')}
+          className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
+                     text-gray-700 dark:text-gray-300 px-4 py-1.5 rounded-lg text-sm transition-colors duration-200"
+        >
+          View All Projects
+        </button>
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
         <div className="relative">
           <button
             onClick={prevProject}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 rounded-full p-2 shadow-md z-10"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 rounded-full p-1.5 shadow-md z-10"
           >
-            <ChevronLeft className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+            <ChevronLeft className="w-5 h-5 text-gray-600 dark:text-gray-300" />
           </button>
 
-          <div 
-            className="mx-12 cursor-pointer"
-            onClick={() => navigate(`/projects/${currentProjects[currentIndex].id}`)}
-          >
+          <div className="mx-10">
             <img
               src={currentProjects[currentIndex].image}
               alt={currentProjects[currentIndex].title}
-              className="w-full h-64 object-cover rounded-lg mb-4"
+              className="w-full h-48 object-cover rounded-lg mb-3"
             />
-            <h3 className="text-xl font-bold text-gray-800 dark:text-white">
+            <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">
               {currentProjects[currentIndex].title}
             </h3>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
               {currentProjects[currentIndex].description}
             </p>
             
-            <div className="flex flex-wrap gap-2 mt-4">
-              {currentProjects[currentIndex].technologies.map(tech => (
-                <span 
-                  key={tech}
-                  className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300"
-                >
-                  {tech}
-                </span>
-              ))}
+            <div className="flex justify-between items-end pr-2">
+              <div className="flex flex-wrap gap-2 flex-grow mr-6">
+                {currentProjects[currentIndex].technologies.map(tech => (
+                  <span 
+                    key={tech}
+                    className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 rounded-full text-xs text-gray-700 dark:text-gray-300"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <button
+                onClick={() => navigate(`/projects/${currentProjects[currentIndex].id}`)}
+                className="ml-6 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm transition-colors duration-200 whitespace-nowrap"
+              >
+                Learn More
+              </button>
             </div>
           </div>
 
           <button
             onClick={nextProject}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 rounded-full p-2 shadow-md z-10"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 rounded-full p-1.5 shadow-md z-10"
           >
-            <ChevronRight className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+            <ChevronRight className="w-5 h-5 text-gray-600 dark:text-gray-300" />
           </button>
         </div>
       </div>
