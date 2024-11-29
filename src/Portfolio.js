@@ -24,6 +24,31 @@ const Portfolio = () => {
     }
   }, [darkMode]);
 
+  const DarkModeToggle = ({ darkMode, setDarkMode }) => {
+    return (
+      <button
+        onClick={() => setDarkMode(!darkMode)}
+        className="relative inline-flex items-center justify-between w-16 h-8 px-1 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-200 focus:outline-none"
+        aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+      >
+        <span className="sr-only">{darkMode ? 'Switch to light mode' : 'Switch to dark mode'}</span>
+        
+        {/* Icons container */}
+        <span className="flex items-center justify-between w-full absolute">
+          <Sun className={`w-4 h-4 text-yellow-500 transition-opacity duration-200 ${darkMode ? 'opacity-0' : 'opacity-100'}`} />
+          <Moon className={`w-4 h-4 text-blue-200 transition-opacity duration-200 ${darkMode ? 'opacity-100' : 'opacity-0'}`} />
+        </span>
+        
+        {/* Toggle circle */}
+        <span
+          className={`absolute block w-6 h-6 rounded-full bg-white shadow transform transition-transform duration-200 ${
+            darkMode ? 'translate-x-8' : 'translate-x-0'
+          }`}
+        />
+      </button>
+    );
+  };
+
   const renderContent = () => {
     switch(currentPage) {
       case 'about':
@@ -226,21 +251,7 @@ const Portfolio = () => {
               Resume
             </button>
             <div className="flex items-center">
-              <button
-                onClick={() => setDarkMode(!darkMode)}
-                className="relative inline-flex items-center h-8 rounded-full w-14 bg-gray-200 dark:bg-blue-600 transition-colors"
-              >
-                <span
-                  className={`${
-                    darkMode ? 'translate-x-8' : 'translate-x-1'
-                  } inline-block w-6 h-6 transform bg-white rounded-full transition-transform`}
-                />
-                {darkMode ? (
-                  <Moon className="w-4 h-4 text-white absolute right-2" />
-                ) : (
-                  <Sun className="w-4 h-4 text-gray-600 absolute left-2" />
-                )}
-              </button>
+              <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
             </div>
           </div>
         </div>
