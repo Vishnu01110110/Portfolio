@@ -7,7 +7,7 @@ import AllProjects from './AllProjects';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Portfolio">
       <div className="App">
         <Portfolio>
           <Routes>
