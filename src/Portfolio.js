@@ -71,7 +71,14 @@ const Portfolio = () => {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="flex items-center space-x-4 mb-6">
-                <img src="/profile.jpg" alt="Profile" className="rounded-full w-24 h-24" />
+                <img 
+                    src="/profile.jpg" 
+                    alt="Profile" 
+                    className="rounded-full w-24 h-24"
+                    onError={(e) => {
+                      e.target.src = "/api/placeholder/150/150"  // Fallback to placeholder
+                    }} 
+                  />
                 <div>
                   <h2 className="text-2xl font-bold">Vishnu</h2>
                   <p className="text-gray-600">Engineer</p>
@@ -162,16 +169,23 @@ const Portfolio = () => {
           <div className="bg-white p-6 rounded-lg shadow-md">
             <div className="mb-8">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">Resume</h2>
                 <a 
                   href="/resume.pdf" 
-                  download 
+                  download="Vishnu_Vardhan_Badam_Resume.pdf"  // This will be the downloaded file name
                   className="bg-blue-500 text-white px-4 py-2 rounded flex items-center space-x-2 hover:bg-blue-600"
+                  onClick={(e) => {
+                    // Prevent download if file doesn't exist
+                    fetch('/resume.pdf').then(response => {
+                      if (!response.ok) {
+                        e.preventDefault();
+                        alert('Resume file is not available');
+                      }
+                    });
+                  }}
                 >
                   <FileText className="w-5 h-5" />
                   <span>Download PDF</span>
                 </a>
-              </div>
               
               <section className="mb-8">
                 <h3 className="text-xl font-bold mb-4 text-blue-600">Education</h3>
