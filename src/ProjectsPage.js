@@ -51,15 +51,15 @@ const ProjectsPage = () => {
                 setCurrentCategory(category.id);
                 setCurrentIndex(0);
               }}
-              className={`bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow
+              className={`bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow
                 border-l-4 ${category.color === 'blue' ? 'border-blue-500' : 'border-purple-500'}
                 ${currentCategory === category.id ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}
             >
               <div className="flex items-center space-x-4">
                 <Icon className={`w-8 h-8 ${category.color === 'blue' ? 'text-blue-500' : 'text-purple-500'}`} />
                 <div className="text-left">
-                  <h3 className="text-xl font-bold">{category.title}</h3>
-                  <p className="text-gray-600">{category.description}</p>
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-white">{category.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300">{category.description}</p>
                 </div>
               </div>
             </button>
@@ -67,13 +67,13 @@ const ProjectsPage = () => {
         })}
       </div>
 
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <div className="relative">
           <button
             onClick={prevProject}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md z-10"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 rounded-full p-2 shadow-md z-10"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-6 h-6 text-gray-600 dark:text-gray-300" />
           </button>
 
           <div 
@@ -85,14 +85,18 @@ const ProjectsPage = () => {
               alt={currentProjects[currentIndex].title}
               className="w-full h-64 object-cover rounded-lg mb-4"
             />
-            <h3 className="text-xl font-bold">{currentProjects[currentIndex].title}</h3>
-            <p className="text-gray-600">{currentProjects[currentIndex].description}</p>
+            <h3 className="text-xl font-bold text-gray-800 dark:text-white">
+              {currentProjects[currentIndex].title}
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              {currentProjects[currentIndex].description}
+            </p>
             
             <div className="flex flex-wrap gap-2 mt-4">
               {currentProjects[currentIndex].technologies.map(tech => (
                 <span 
                   key={tech}
-                  className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700"
+                  className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300"
                 >
                   {tech}
                 </span>
@@ -102,9 +106,9 @@ const ProjectsPage = () => {
 
           <button
             onClick={nextProject}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md z-10"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 rounded-full p-2 shadow-md z-10"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-6 h-6 text-gray-600 dark:text-gray-300" />
           </button>
         </div>
       </div>

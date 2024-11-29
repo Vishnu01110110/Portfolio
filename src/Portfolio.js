@@ -10,12 +10,7 @@ const Portfolio = () => {
   const [currentPage, setCurrentPage] = useState('about');
   const [profileImageError, setProfileImageError] = useState(false);
   const navigate = useNavigate();
-  const [darkMode, setDarkMode] = useState(() => {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return true;
-    }
-    return false;
-  });
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     document.title = "Vishnu's Portfolio";
@@ -230,16 +225,23 @@ const Portfolio = () => {
             >
               Resume
             </button>
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              {darkMode ? (
-                <Sun className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-              ) : (
-                <Moon className="w-5 h-5 text-gray-600" />
-              )}
-            </button>
+            <div className="flex items-center">
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="relative inline-flex items-center h-6 rounded-full w-11 bg-gray-200 dark:bg-blue-600 transition-colors"
+              >
+                <span
+                  className={`${
+                    darkMode ? 'translate-x-6' : 'translate-x-1'
+                  } inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
+                />
+                {darkMode ? (
+                  <Moon className="w-4 h-4 text-white absolute right-1" />
+                ) : (
+                  <Sun className="w-4 h-4 text-gray-600 absolute left-1" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </nav>
