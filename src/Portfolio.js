@@ -67,7 +67,7 @@ const Portfolio = () => {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="flex items-center space-x-4 mb-6">
-                <img src="/api/placeholder/150/150" alt="Profile" className="rounded-full w-24 h-24" />
+                <img src="public/profile.jpg" alt="Profile" className="rounded-full w-24 h-24" />
                 <div>
                   <h2 className="text-2xl font-bold">Vishnu</h2>
                   <p className="text-gray-600">Robotics Engineer</p>
