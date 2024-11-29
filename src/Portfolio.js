@@ -70,12 +70,12 @@ const Portfolio = () => {
                 <img src={`${process.env.PUBLIC_URL}/profile.jpg`} alt="Profile" className="rounded-full w-24 h-24" />
                 <div>
                   <h2 className="text-2xl font-bold">Vishnu</h2>
-                  <p className="text-gray-600">Robotics Engineer</p>
+                  <p className="text-gray-600">Engineer</p>
                 </div>
               </div>
               <div className="space-y-4">
                 <p className="text-gray-700">
-                  Passionate robotics engineer with a keen interest in automation, machine learning, and robotic systems design. Always excited to learn and create innovative solutions.
+                 Hi, I’m Vishnu, a passionate robotics engineer with a keen interest in automation, machine learning, and robotic systems design. Always excited to learn and create innovative solutions.  They say engineers love fixing things, but honestly, I’m just trying to break fewer things each day.
                 </p>
                 <div className="flex space-x-4">
                   <a href="mailto:vishnuvardhan.badam@gmail.com" className="hover:text-blue-500">
