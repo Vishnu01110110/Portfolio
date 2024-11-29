@@ -16,7 +16,11 @@ const Portfolio = ({ children }) => {
 
   useEffect(() => {
     document.title = "Vishnu's Portfolio";
-  }, []);
+    
+    // Set current page based on location
+    const path = location.pathname.split('/')[1] || 'about';
+    setCurrentPage(path);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (darkMode) {
@@ -27,7 +31,7 @@ const Portfolio = ({ children }) => {
   }, [darkMode]);
 
   const renderContent = () => {
-    if (location.pathname === '/about') {
+    if (location.pathname === '/' || location.pathname === '/about') {
       return (
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md flex flex-col h-full">
@@ -274,37 +278,41 @@ const Portfolio = ({ children }) => {
             >
               Resume
             </button>
-            <div className="flex items-center">
-              <ModernToggle darkMode={darkMode} setDarkMode={setDarkMode} />
-            </div>
           </div>
         </div>
       </nav>
 
+      {/* Floating toggle in top right - smaller and higher */}
+      <div className="fixed top-0 right-2 z-20">
+        <div className="bg-white dark:bg-gray-800 rounded-full shadow-lg p-1.5 scale-75">
+          <ModernToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+        </div>
+      </div>
+
       <main className="max-w-6xl mx-auto p-4 md:p-8">
-        {(location.pathname === '/about' || location.pathname === '/resume') && renderContent()}
-        {location.pathname !== '/about' && location.pathname !== '/resume' && children}
-        {currentPage === 'about' && location.pathname === '/about' && <div className="h-20" />}
+        {(location.pathname === '/' || location.pathname === '/about' || location.pathname === '/resume') && renderContent()}
+        {location.pathname !== '/' && location.pathname !== '/about' && location.pathname !== '/resume' && children}
+        {(currentPage === 'about' || location.pathname === '/') && <div className="h-20" />}
       </main>
 
-      {currentPage === 'about' && location.pathname === '/about' && (
-          <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg p-4">
-            <div className="max-w-2xl mx-auto flex justify-center items-center space-x-4">
-              <span className="text-lg font-medium text-gray-700 dark:text-gray-200">
-                Always excited to chat—be it about tech, robotics, or just life!
-              </span>
-              <a
-                href="https://www.linkedin.com/messaging/compose/?to=badam-vishnu-vardhan"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 
-                         text-white font-medium rounded-lg transition-colors duration-200"
-              >
-                <span>Say Hi</span>
-                <Send className="ml-2 h-6 w-6" />
-              </a>
-            </div>
+      {(currentPage === 'about' || location.pathname === '/') && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg p-4">
+          <div className="max-w-2xl mx-auto flex justify-between items-center">
+            <span className="text-lg font-medium text-gray-700 dark:text-gray-200">
+              Always excited to chat—be it about tech, robotics, or just life!
+            </span>
+            <a
+              href="https://www.linkedin.com/messaging/compose/?to=badam-vishnu-vardhan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 
+                       text-white font-medium rounded-lg transition-colors duration-200"
+            >
+              <span>Say Hi</span>
+              <Send className="ml-2 h-6 w-6" />
+            </a>
           </div>
+        </div>
       )}
     </div>
   );

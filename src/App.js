@@ -17,7 +17,7 @@ function App() {
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/projects/all" element={<AllProjects />} />
             <Route path="/projects/:id" element={<ProjectDetails />} />
-            <Route path="*" element={<Navigate to="/about" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Portfolio>
       </div>
