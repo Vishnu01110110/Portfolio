@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, User, Mail, Github, Linkedin } from 'lucide-
 
 const Portfolio = () => {
   useEffect(() => {
-    document.title = "Vishnu Vardhan Badam's Portfolio";
+    document.title = "Vishnu's Portfolio";
   }, []);
 
   const [currentPage, setCurrentPage] = useState('about');
