@@ -72,7 +72,7 @@ const Portfolio = () => {
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="flex items-center space-x-4 mb-6">
                 <img 
-                    src="/profile.jpg" 
+                    src={`${process.env.PUBLIC_URL}/profile.jpg`} 
                     alt="Profile" 
                     className="rounded-full w-24 h-24"
                     onError={(e) => {
@@ -170,7 +170,7 @@ const Portfolio = () => {
             <div className="mb-8">
               <div className="flex justify-between items-center mb-6">
                 <a 
-                  href="/resume.pdf" 
+                  href={`${process.env.PUBLIC_URL}/resume.pdf`} 
                   download="Vishnu_Vardhan_Badam_Resume.pdf"
                   className="bg-blue-500 text-white px-4 py-2 rounded flex items-center space-x-2 hover:bg-blue-600"
                   onClick={(e) => {
