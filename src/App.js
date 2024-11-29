@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Portfolio from './Portfolio';
 import ProjectsPage from './ProjectsPage';
 import ProjectDetails from './ProjectDetails';
@@ -11,7 +11,8 @@ function App() {
       <div className="App">
         <Portfolio>
           <Routes>
-            <Route path="/" element={null} />
+            <Route path="/" element={<Navigate to="/about" replace />} />
+            <Route path="/about" element={null} />
             <Route path="/resume" element={null} />
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/projects/all" element={<AllProjects />} />
