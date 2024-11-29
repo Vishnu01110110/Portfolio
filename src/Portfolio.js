@@ -228,17 +228,17 @@ const Portfolio = () => {
             <div className="flex items-center">
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className="relative inline-flex items-center h-6 rounded-full w-11 bg-gray-200 dark:bg-blue-600 transition-colors"
+                className="relative inline-flex items-center h-8 rounded-full w-14 bg-gray-200 dark:bg-blue-600 transition-colors"
               >
                 <span
                   className={`${
-                    darkMode ? 'translate-x-6' : 'translate-x-1'
-                  } inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
+                    darkMode ? 'translate-x-8' : 'translate-x-1'
+                  } inline-block w-6 h-6 transform bg-white rounded-full transition-transform`}
                 />
                 {darkMode ? (
-                  <Moon className="w-4 h-4 text-white absolute right-1" />
+                  <Moon className="w-4 h-4 text-white absolute right-2" />
                 ) : (
-                  <Sun className="w-4 h-4 text-gray-600 absolute left-1" />
+                  <Sun className="w-4 h-4 text-gray-600 absolute left-2" />
                 )}
               </button>
             </div>
