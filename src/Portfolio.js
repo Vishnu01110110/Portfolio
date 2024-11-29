@@ -4,6 +4,9 @@ import { User, Mail, Github, Linkedin, FileText } from 'lucide-react';
 import ProjectsPage from './ProjectsPage';
 
 const Portfolio = () => {
+  const baseUrl = process.env.PUBLIC_URL || '';
+  const profileImagePath = `${baseUrl}/profile.jpg`;
+
   const [currentPage, setCurrentPage] = useState('about');
   const [profileImageError, setProfileImageError] = useState(false);
   const navigate = useNavigate();
@@ -132,10 +135,7 @@ const Portfolio = () => {
       </nav>
 
       <main className="max-w-6xl mx-auto p-4 md:p-8">
-        <Routes>
-          <Route path="/" element={renderContent()} />
-          <Route path="/projects/:id" element={<ProjectDetails />} />
-        </Routes>
+        {renderContent()}
       </main>
     </div>
   );
