@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { User, Mail, Github, Linkedin, FileText, Sun, Moon } from 'lucide-react';
+import { User, Mail, Github, Linkedin, FileText, Sun, Moon, Send } from 'lucide-react';
 import ProjectsPage from './ProjectsPage';
+import ModernToggle from './components/ModernToggle';
 
 const Portfolio = () => {
   const baseUrl = process.env.PUBLIC_URL || '';
@@ -24,37 +25,12 @@ const Portfolio = () => {
     }
   }, [darkMode]);
 
-  const DarkModeToggle = ({ darkMode, setDarkMode }) => {
-    return (
-      <button
-        onClick={() => setDarkMode(!darkMode)}
-        className="relative inline-flex items-center justify-between w-16 h-8 px-1 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-200 focus:outline-none"
-        aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-      >
-        <span className="sr-only">{darkMode ? 'Switch to light mode' : 'Switch to dark mode'}</span>
-        
-        {/* Icons container */}
-        <span className="flex items-center justify-between w-full absolute">
-          <Sun className={`w-4 h-4 text-yellow-500 transition-opacity duration-200 ${darkMode ? 'opacity-0' : 'opacity-100'}`} />
-          <Moon className={`w-4 h-4 text-blue-200 transition-opacity duration-200 ${darkMode ? 'opacity-100' : 'opacity-0'}`} />
-        </span>
-        
-        {/* Toggle circle */}
-        <span
-          className={`absolute block w-6 h-6 rounded-full bg-white shadow transform transition-transform duration-200 ${
-            darkMode ? 'translate-x-8' : 'translate-x-0'
-          }`}
-        />
-      </button>
-    );
-  };
-
   const renderContent = () => {
     switch(currentPage) {
       case 'about':
         return (
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md flex flex-col h-full">
               <div className="flex items-center space-x-4 mb-6">
                 <img 
                   src={profileImageError ? "/api/placeholder/150/150" : profileImagePath}
@@ -71,17 +47,30 @@ const Portfolio = () => {
                 <p className="text-gray-700 dark:text-gray-300">
                   Hi, I'm Vishnu, a passionate robotics engineer with a keen interest in automation, machine learning, and robotic systems design. Always excited to learn and create innovative solutions. They say engineers love fixing things, but honestly, I'm just trying to break fewer things each day.
                 </p>
-                <div className="flex space-x-4">
-                  <a href="mailto:vishnuvardhan.badam@gmail.com" className="hover:text-blue-500">
-                    <Mail className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-                  </a>
-                  <a href="https://github.com/Vishnu01110110" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">
-                    <Github className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-                  </a>
-                  <a href="https://www.linkedin.com/in/badam-vishnu-vardhan/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">
-                    <Linkedin className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-                  </a>
-                </div>
+              </div>
+              <div className="flex justify-end space-x-4 mt-4">
+                <a 
+                  href="mailto:vishnuvardhan.badam@gmail.com" 
+                  className="hover:text-blue-500 transition-colors duration-200"
+                >
+                  <Mail className="w-5 h-5 text-gray-600 dark:text-gray-300 hover:text-blue-500" />
+                </a>
+                <a 
+                  href="https://github.com/Vishnu01110110" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-blue-500 transition-colors duration-200"
+                >
+                  <Github className="w-5 h-5 text-gray-600 dark:text-gray-300 hover:text-blue-500" />
+                </a>
+                <a 
+                  href="https://www.linkedin.com/in/badam-vishnu-vardhan/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-blue-500 transition-colors duration-200"
+                >
+                  <Linkedin className="w-5 h-5 text-gray-600 dark:text-gray-300 hover:text-blue-500" />
+                </a>
               </div>
             </div>
             {/* Skills section */}
@@ -223,7 +212,7 @@ const Portfolio = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
       <nav className="bg-white dark:bg-gray-800 shadow-md p-4 sticky top-0 z-10">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Vishnu Vardhan Badam</h1>
@@ -251,7 +240,7 @@ const Portfolio = () => {
               Resume
             </button>
             <div className="flex items-center">
-              <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+              <ModernToggle darkMode={darkMode} setDarkMode={setDarkMode} />
             </div>
           </div>
         </div>
@@ -259,7 +248,28 @@ const Portfolio = () => {
 
       <main className="max-w-6xl mx-auto p-4 md:p-8">
         {renderContent()}
+        {currentPage === 'about' && <div className="h-20" />} {/* Spacer only on 'hi' page */}
       </main>
+
+      {currentPage === 'about' && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg p-4">
+          <div className="max-w-2xl mx-auto flex justify-center items-center space-x-4">
+            <span className="text-lg font-medium text-gray-700 dark:text-gray-200">
+              Always excited to chat—be it about tech, robotics, or just life!
+            </span>
+            <a
+              href="https://www.linkedin.com/messaging/compose/?to=badam-vishnu-vardhan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 
+                       text-white font-medium rounded-lg transition-colors duration-200"
+            >
+              <span>Say Hi</span>
+              <Send className="ml-2 h-6 w-6" />
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
