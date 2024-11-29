@@ -171,7 +171,7 @@ const Portfolio = () => {
               <div className="flex justify-between items-center mb-6">
                 <a 
                   href="/resume.pdf" 
-                  download="Vishnu_Vardhan_Badam_Resume.pdf"  // This will be the downloaded file name
+                  download="Vishnu_Vardhan_Badam_Resume.pdf"
                   className="bg-blue-500 text-white px-4 py-2 rounded flex items-center space-x-2 hover:bg-blue-600"
                   onClick={(e) => {
                     // Prevent download if file doesn't exist
@@ -186,7 +186,7 @@ const Portfolio = () => {
                   <FileText className="w-5 h-5" />
                   <span>Download PDF</span>
                 </a>
-              
+              </div>
               <section className="mb-8">
                 <h3 className="text-xl font-bold mb-4 text-blue-600">Education</h3>
                 <div className="space-y-4">
