@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight, ChevronLeft } from 'lucide-react';
 import { getProjectData } from './projectsData';
 
 const ProjectDetails = () => {
@@ -8,12 +8,27 @@ const ProjectDetails = () => {
   const navigate = useNavigate();
   const project = getProjectData(id);
 
+  useEffect(() => {
+    // Listen for popstate event (browser back button)
+    const handlePopState = (event) => {
+      event.preventDefault();
+      navigate('/projects/all');
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    // Cleanup listener when component unmounts
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [navigate]);
+
   if (!project) {
     return (
       <div className="text-center p-8">
         <h2 className="text-2xl font-bold">Project not found</h2>
         <button 
-          onClick={() => navigate('/projects')}
+          onClick={() => navigate('/projects/all')}
           className="mt-4 text-blue-500 hover:text-blue-700"
         >
           Back to Projects
@@ -26,18 +41,23 @@ const ProjectDetails = () => {
     <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
       <div className="p-6 space-y-8">
         <button 
-          onClick={() => navigate('/projects')}
-          className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+          onClick={() => navigate('/projects/all')}
+          className="flex items-center space-x-2 text-base font-medium text-gray-600 dark:text-gray-300 
+                     hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200 mb-6 px-4 py-2
+                     group"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Projects</span>
+          <ChevronLeft className="w-5 h-5 group-hover:text-blue-500 dark:group-hover:text-blue-400" />
+          <span className="group-hover:text-blue-500 dark:group-hover:text-blue-400">View All Projects</span>
         </button>
 
-        <img 
-          src={project.image}
-          alt={project.title}
-          className="w-full h-48 object-cover rounded-lg"
-        />
+        {/* Project Image with background */}
+        <div className="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden mb-3">
+          <img 
+            src={project.image}
+            alt={project.title}
+            className="w-full h-64 md:h-80 object-contain"
+          />
+        </div>
 
         {/* Title and Technologies */}
         <div>
@@ -73,25 +93,63 @@ const ProjectDetails = () => {
             {project.methodology.intro && (
               <p className="text-gray-700 dark:text-gray-300">{project.methodology.intro}</p>
             )}
-            <div className="space-y-6">
+            <div className="space-y-8">
               {Object.entries(project.methodology)
                 .filter(([key]) => key !== 'intro')
-                .map(([key, section]) => (
-                  <div key={key} className="space-y-2">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
-                      {section.title}
-                    </h3>
-                    <ul className="list-disc pl-6 space-y-2">
-                      {section.details.map((detail, index) => (
-                        <li key={index} className="text-gray-700 dark:text-gray-300">
-                          {detail}
-                        </li>
-                      ))}
-                    </ul>
-                    {section.note && (
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 italic">
-                        {section.note}
-                      </p>
+                .map(([key, section], index) => (
+                  <div key={key} className="space-y-4">
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
+                        {section.title}
+                      </h3>
+                      <ul className="list-disc pl-6 space-y-2">
+                        {section.details.map((detail, idx) => (
+                          <li key={idx} className="text-gray-700 dark:text-gray-300">
+                            {detail}
+                          </li>
+                        ))}
+                      </ul>
+                      {section.note && (
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 italic">
+                          {section.note}
+                        </p>
+                      )}
+                    </div>
+                    {project.id === 'digital-twin-vehicle' && (
+                      <div className="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden mt-4">
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/dt-${index + 1}.jpg`}
+                          alt={`Digital Twin Methodology ${index + 1}`}
+                          className="w-full h-64 md:h-80 object-contain"
+                        />
+                      </div>
+                    )}
+                    {project.id === '3d-vision-assistant' && (
+                      <div className="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden mt-4">
+                        <img
+                          src={index === 2 ? project.image : `${process.env.PUBLIC_URL}/images/3d-${index + 1}.jpg`}
+                          alt={`3D Vision Methodology ${index + 1}`}
+                          className="w-full h-64 md:h-80 object-contain"
+                        />
+                      </div>
+                    )}
+                    {project.id === 'adaptive-conveyor-control' && (
+                      <div className="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden mt-4">
+                        <img
+                          src={index === 1 ? project.image : `${process.env.PUBLIC_URL}/images/cc-${index === 0 ? '1' : '3'}.jpg`}
+                          alt={`Conveyor Control Methodology ${index + 1}`}
+                          className="w-full h-64 md:h-80 object-contain"
+                        />
+                      </div>
+                    )}
+                    {project.id === 'diffusion-qr-imagery' && (
+                      <div className="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden mt-4">
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/qr-${index + 1}.jpg`}
+                          alt={`QR Diffusion Methodology ${index + 1}`}
+                          className="w-full h-64 md:h-80 object-contain"
+                        />
+                      </div>
                     )}
                   </div>
                 ))}
@@ -186,6 +244,18 @@ const ProjectDetails = () => {
             </p>
           </section>
         )}
+      </div>
+
+      {/* Floating Button */}
+      <div className="fixed bottom-8 right-8">
+        <button
+          onClick={() => navigate('/projects/all')}
+          className="bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg 
+                     px-6 py-3 flex items-center space-x-2 transition-all duration-200 
+                     hover:shadow-xl"
+        >
+          <span className="font-medium">View All Projects</span>
+        </button>
       </div>
     </div>
   );

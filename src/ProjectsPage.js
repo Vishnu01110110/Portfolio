@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Cpu, Code, ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects } from './projectsData';
 
 const ProjectsPage = () => {
-  const navigate = useNavigate();
-  const [currentCategory, setCurrentCategory] = useState('hardware');
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentCategory, setCurrentCategory] = useState(() => 
+    localStorage.getItem('projectCategory') || 'hardware'
+  );
+  const [currentIndex, setCurrentIndex] = useState(() => 
+    parseInt(localStorage.getItem('projectIndex')) || 0
+  );
 
+  useEffect(() => {
+    localStorage.setItem('projectCategory', currentCategory);
+    localStorage.setItem('projectIndex', currentIndex.toString());
+  }, [currentCategory, currentIndex]);
+
+  const navigate = useNavigate();
   const categories = [
     {
       id: 'hardware',
@@ -71,7 +80,8 @@ const ProjectsPage = () => {
         <button
           onClick={() => navigate('/projects/all')}
           className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
-                     text-gray-700 dark:text-gray-300 px-4 py-1.5 rounded-lg text-sm transition-colors duration-200"
+                     text-gray-700 dark:text-gray-300 px-6 py-2.5 rounded-lg text-base font-semibold
+                     transition-colors duration-200"
         >
           View All Projects
         </button>
@@ -87,11 +97,16 @@ const ProjectsPage = () => {
           </button>
 
           <div className="mx-10">
-            <img
-              src={currentProjects[currentIndex].image}
-              alt={currentProjects[currentIndex].title}
-              className="w-full h-48 object-cover rounded-lg mb-3"
-            />
+            <div 
+              onClick={() => navigate(`/projects/${currentProjects[currentIndex].id}`)}
+              className="relative bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden mb-3 cursor-pointer"
+            >
+              <img
+                src={currentProjects[currentIndex].image}
+                alt={currentProjects[currentIndex].title}
+                className="w-full h-64 md:h-80 object-contain hover:scale-105 transition-transform duration-300"
+              />
+            </div>
             <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">
               {currentProjects[currentIndex].title}
             </h3>
