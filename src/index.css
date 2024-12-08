@@ -12,6 +12,15 @@ code {
     monospace;
 }
 
+.centered-large-note {
+  text-align: center;
+  font-size: 1.1em;
+  margin: 1.5em auto;
+  max-width: 80%;
+  font-style: italic;
+  color: #666;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

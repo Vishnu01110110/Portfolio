@@ -5,6 +5,7 @@ export const projects = {
         title: 'Novel Whip-like Linkage Mechanism (Do not review this project for 24696 )',
         description: 'Automated battery removal system for Apple Daisy',
         image: 'https://placehold.co/600x400/2563eb/ffffff?text=Robot+Mechanism',
+        caption: 'Automated battery removal system for Apple Daisy',
         technologies: ['ROS', 'UR5', 'CAD', 'Motion Planning'],
         overview: 'Project details coming up',
         features: [
@@ -97,7 +98,10 @@ export const projects = {
               'Implemented skeletonization for feature size analysis',
               'Created background removal and image preprocessing pipeline'
             ],
-            note: 'Detects the size of an object based on a reference object'
+            outputNote: {
+              text: 'Detects the size of an object based on a reference object',
+              style: 'centered-large-note'
+            }
           },
           overhangDetection: {
             title: '2. Overhang Identification (Level 02)',
@@ -106,7 +110,10 @@ export const projects = {
               'Implemented support structure generation',
               'Created image processing pipeline for edge detection'
             ],
-            note: 'Detects overhangs and generates sample supports to enhance user understanding'
+            outputNote: {
+              text: 'Detects overhangs and generates sample supports to enhance user understanding',
+              style: 'centered-large-note'
+            }
           },
           stlConversion: {
             title: '3. STL Conversion (Level 03)',
@@ -115,7 +122,10 @@ export const projects = {
               'Implemented point cloud generation from 2D images',
               'Created mesh generation through triangulation'
             ],
-            note: 'Sample STL file generation'
+            outputNote: {
+              text: 'Sample STL file generation',
+              style: 'centered-large-note'
+            }
           }
         },
         results: {
@@ -163,7 +173,7 @@ export const projects = {
               'Implemented a training pipeline using annotated datasets of recyclable materials',
               'Integrated the detection system with conveyor speed control algorithms'
             ],
-            note: 'Outputs: Accurate identification of materials in real-time. Classification into predefined categories such as plastics, metals, and paper.'
+
           },
           speedControl: {
             title: '2. Adaptive Conveyor Speed Control (Phase 2)',
@@ -172,7 +182,6 @@ export const projects = {
               'Established feedback loops between material flow data and belt speed parameters',
               'Simulated system performance under various material flow scenarios'
             ],
-            note: 'Outputs: Optimal speed adjustments based on real-time data. Reduced material overflow and bottlenecks.'
           },
           systemIntegration: {
             title: '3. System Integration and Testing (Phase 3)',
@@ -181,7 +190,6 @@ export const projects = {
               'Conducted trials on a prototype conveyor system to evaluate overall performance',
               'Implemented a user interface for monitoring and manual overrides'
             ],
-            note: 'Outputs: Seamless coordination between detection and control systems. Enhanced operational transparency through an interactive UI.'
           }
         },
         results: {
@@ -227,7 +235,6 @@ export const projects = {
               'Utilized latent space diffusion processes for efficient computation',
               'Implemented CLIP-based text encoders for accurate textual embedding'
             ],
-            note: 'Outputs: High-quality, semantically aligned image generation.'
           },
           qrIntegration: {
             title: '2. QR Code Integration with Inpainting and OpenCV',
@@ -236,7 +243,7 @@ export const projects = {
               'Enhanced integration using OpenCV for faster, more efficient QR embedding',
               'Ensured minimal aesthetic compromise while preserving QR code scannability'
             ],
-            note: 'Outputs: Functional and visually appealing QR code-embedded images.'
+
           },
           evaluation: {
             title: '3. Model Evaluation and Comparative Analysis',
@@ -244,7 +251,6 @@ export const projects = {
               'Evaluated performance using Fréchet Inception Distance (FID) and CLIP scores',
               'Conducted a comparative study with state-of-the-art ControlNet models'
             ],
-            note: 'Outputs: Comprehensive assessment of functional and aesthetic performance.'
           }
         },
         results: {
