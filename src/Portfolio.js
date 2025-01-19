@@ -441,6 +441,11 @@ const Portfolio = ({ children }) => {
             >
               Resume
             </button>
+            
+            {/* Desktop dark mode toggle */}
+            <div className="ml-4">
+              <ModernToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+            </div>
           </div>
         </div>
 
@@ -489,16 +494,17 @@ const Portfolio = ({ children }) => {
             >
               Resume
             </button>
+            
+            {/* Mobile dark mode toggle */}
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-2 mt-2">
+              <div className="flex items-center justify-between px-4 py-2">
+                <span className="text-gray-600 dark:text-gray-300">Dark Mode</span>
+                <ModernToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+              </div>
+            </div>
           </div>
         </div>
       </nav>
-
-      {/* Floating toggle in top right - smaller and higher */}
-      <div className="fixed top-0 right-2 z-20">
-        <div className="bg-white dark:bg-gray-800 rounded-full shadow-lg p-1.5 scale-75">
-          <ModernToggle darkMode={darkMode} setDarkMode={setDarkMode} />
-        </div>
-      </div>
 
       <main className="max-w-6xl mx-auto p-4 md:p-8">
         {(location.pathname === '/' || location.pathname === '/about' || location.pathname === '/resume') && renderContent()}
