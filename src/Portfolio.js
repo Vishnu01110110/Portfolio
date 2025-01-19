@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { 
   User, Mail, Github, Linkedin, FileText, Sun, Moon, Send, Phone, 
-  Brain, Wrench, GraduationCap, Award, Command, Briefcase 
+  Brain, Wrench, GraduationCap, Award, Command, Briefcase, Menu 
 } from 'lucide-react';
 import ProjectsPage from './ProjectsPage';
 import ModernToggle from './components/ModernToggle';
@@ -16,6 +16,7 @@ const Portfolio = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [darkMode, setDarkMode] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     document.title = "Vishnu's Portfolio";
@@ -390,7 +391,17 @@ const Portfolio = ({ children }) => {
       <nav className="bg-white dark:bg-gray-800 shadow-md p-4 sticky top-0 z-10">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Vishnu Vardhan Badam</h1>
-          <div className="flex items-center space-x-4">
+          
+          {/* Mobile menu button */}
+          <button 
+            className="md:hidden text-gray-600 dark:text-gray-300"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+
+          {/* Desktop menu */}
+          <div className="hidden md:flex items-center space-x-4">
             <button 
               onClick={() => {
                 navigate('/about');
@@ -423,6 +434,54 @@ const Portfolio = ({ children }) => {
                 setCurrentPage('resume');
               }}
               className={`px-4 py-2 rounded ${
+                isActivePath('/resume') 
+                  ? 'bg-blue-500 text-white' 
+                  : 'text-gray-600 dark:text-gray-300'
+              }`}
+            >
+              Resume
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu dropdown */}
+        <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-800 shadow-lg`}>
+          <div className="flex flex-col p-4 space-y-2">
+            <button 
+              onClick={() => {
+                navigate('/about');
+                setCurrentPage('about');
+                setIsMobileMenuOpen(false);
+              }}
+              className={`px-4 py-2 rounded text-left ${
+                isActivePath('/') || isActivePath('/about')
+                  ? 'bg-blue-500 text-white' 
+                  : 'text-gray-600 dark:text-gray-300'
+              }`}
+            >
+              About
+            </button>
+            <button 
+              onClick={() => {
+                navigate('/projects');
+                setCurrentPage('projects');
+                setIsMobileMenuOpen(false);
+              }}
+              className={`px-4 py-2 rounded text-left ${
+                isActivePath('/projects') 
+                  ? 'bg-blue-500 text-white' 
+                  : 'text-gray-600 dark:text-gray-300'
+              }`}
+            >
+              Projects
+            </button>
+            <button 
+              onClick={() => {
+                navigate('/resume');
+                setCurrentPage('resume');
+                setIsMobileMenuOpen(false);
+              }}
+              className={`px-4 py-2 rounded text-left ${
                 isActivePath('/resume') 
                   ? 'bg-blue-500 text-white' 
                   : 'text-gray-600 dark:text-gray-300'
