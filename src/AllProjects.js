@@ -6,13 +6,21 @@ import { ChevronLeft, Wrench } from 'lucide-react';
 const AllProjects = () => {
   const navigate = useNavigate();
 
+  const handleHardwareClick = () => {
+    navigate('/hardware-projects', { state: { fromProjectsPage: true } });
+  };
+
+  const handleProjectClick = (projectId) => {
+    navigate(`/projects/${projectId}`, { state: { fromProjectsPage: true } });
+  };
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Object.values(projects).flat().map((project) => (
           <div 
             key={project.id}
-            onClick={() => navigate(`/projects/${project.id}`)}
+            onClick={() => handleProjectClick(project.id)}
             className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden cursor-pointer
                        hover:shadow-lg transition-shadow duration-200"
           >
@@ -47,12 +55,11 @@ const AllProjects = () => {
         ))}
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="fixed bottom-8 right-8 flex space-x-4">
+
+      {/* Hardware Projects Button */}
+      <div className="fixed bottom-8 right-8">
         <button
-          onClick={() => navigate('/projects/hardware', { 
-            state: { fromProjectsPage: true } 
-          })}
+          onClick={handleHardwareClick}
           className="bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg 
                      p-3 transition-all duration-200 hover:shadow-xl"
           aria-label="Hardware Projects"

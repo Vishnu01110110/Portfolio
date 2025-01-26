@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { 
   User, Mail, Github, Linkedin, FileText, Sun, Moon, Send, Phone, 
   Brain, Wrench, GraduationCap, Award, Command, Briefcase, Menu 
@@ -8,6 +8,8 @@ import ProjectsPage from './ProjectsPage';
 import ModernToggle from './components/ModernToggle';
 import HardwareProjects from './HardwareProjects';
 import AllProjects from './AllProjects';
+import HProjectDetails from './HProjectDetails';
+import ProjectDetails from './ProjectDetails';
 
 const Portfolio = ({ children }) => {
   const baseUrl = process.env.PUBLIC_URL || '';
@@ -388,13 +390,14 @@ const Portfolio = ({ children }) => {
     return location.pathname.startsWith(path);
   };
 
-  // Add a check to see if we're on the hardware projects page
-  const isHardwarePage = location.pathname === '/projects/hardware';
+  // Add this check for hardware project pages
+  const isHardwarePage = location.pathname.startsWith('/hardware-projects');
+  const showNavigation = !isHardwarePage || (isHardwarePage && location.state?.fromProjectsPage);
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
-      {/* Only show nav if NOT on hardware page */}
-      {!isHardwarePage && (
+      {/* Only show nav if showNavigation is true */}
+      {showNavigation && (
         <nav className="bg-white dark:bg-gray-800 shadow-md p-4 sticky top-0 z-10">
           <div className="max-w-6xl mx-auto flex justify-between items-center">
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Vishnu Vardhan Badam</h1>
@@ -522,7 +525,9 @@ const Portfolio = ({ children }) => {
           <Route path="/about" element={renderContent()} />
           <Route path="/resume" element={renderContent()} />
           <Route path="/projects/all" element={<AllProjects />} />
-          <Route path="/projects/hardware" element={<HardwareProjects />} />
+          <Route path="/projects/:id" element={<ProjectDetails />} />
+          <Route path="/hardware-projects" element={<HardwareProjects />} />
+          <Route path="/hardware-projects/:projectId" element={<HProjectDetails />} />
         </Routes>
       </main>
 
