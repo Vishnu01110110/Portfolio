@@ -58,7 +58,7 @@ const Portfolio = ({ children }) => {
               </div>
               <div className="space-y-4">
                 <p className="text-gray-700 dark:text-gray-300">
-                  Hi, I'm Vishnu, a passionate robotics engineer with a keen interest in automation, machine learning, and robotic systems design. Always excited to learn and create innovative solutions. They say engineers love fixing things, but honestly, I'm just trying to break fewer things each day.
+                  Hi, I'm Vishnu, a passionate robotics engineer with a keen interest in automation, machine learning, and robotic systems design. Always excited to learn and create innovative solutions. They say engineers love fixing things, but honestly, I'm just trying to break fewer things each day PAGE UNDER CONSTRUCTION.
                 </p>
               </div>
             </div>
@@ -536,7 +536,7 @@ const Portfolio = ({ children }) => {
         <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg p-4 z-20">
           <div className="max-w-2xl mx-auto flex justify-between items-center">
             <span className="text-lg font-medium text-gray-700 dark:text-gray-200">
-              Always excited to chat—be it about ai, tech, robotics, or just life!
+              Always excited to chat—be it about ai, tech, robotics, or just life! (PAGE UNDER CONSTRUCTION)
             </span>
             <a
               href="https://www.linkedin.com/messaging/compose/?to=badam-vishnu-vardhan"
