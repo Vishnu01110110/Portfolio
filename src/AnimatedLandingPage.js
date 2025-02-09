@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { User, Mail, Github, Linkedin, Phone } from 'lucide-react';
+import { 
+  CircuitBoard, 
+  Briefcase, 
+  Wrench, 
+  Star,
+  User, 
+  Mail, 
+  Github, 
+  Linkedin, 
+  Phone 
+} from 'lucide-react';
 
-const AnimatedLandingPage = () => {
+const AnimatedLandingPage = (props) => {
+  const baseUrl = process.env.PUBLIC_URL || '';
+  const profileImagePath = `${baseUrl}/profile.jpg`;
+  const [profileImageError, setProfileImageError] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const [activeIcon, setActiveIcon] = useState(0);
   const [isIntersecting, setIsIntersecting] = useState({
     hero: true,
     about: false,
-    skills: false
+    skills: false,
+    'projects-preview': false
   });
 
   useEffect(() => {
     const observers = {};
-    const sections = ['hero', 'about', 'skills'];
+    const sections = ['hero', 'about', 'skills', 'projects-preview'];
 
     sections.forEach(section => {
       const element = document.getElementById(section);
@@ -25,6 +39,8 @@ const AnimatedLandingPage = () => {
             }));
             if (entry.isIntersecting) {
               setActiveSection(section);
+              // Notify parent component about section change
+              props.onSectionChange?.(section);
             }
           },
           { threshold: 0.5 }
@@ -46,14 +62,12 @@ const AnimatedLandingPage = () => {
       });
       clearInterval(interval);
     };
-  }, []);
+  }, [props.onSectionChange]);
 
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  // Remove the scrollToSection function as it's no longer needed
+
+  // Simplify scrolling behavior by removing the wheel event handler
+  // and allowing natural scrolling
 
   const renderTechIcon = () => {
     const icons = [
@@ -106,17 +120,17 @@ const AnimatedLandingPage = () => {
   };
 
   return (
-    <div className="h-screen overflow-y-scroll snap-y snap-mandatory">
+    <div className="h-screen overflow-y-auto scroll-smooth">
       {/* Hero Section */}
       <section 
         id="hero" 
-        className={`h-screen flex items-center justify-center snap-start bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 transition-opacity duration-1000 ${
+        className={`h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 transition-opacity duration-500 ${
           isIntersecting.hero ? 'opacity-100' : 'opacity-0'
         }`}
       >
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            <div className="max-w-xl text-center md:text-left">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 min-h-[500px]">
+            <div className="max-w-xl text-center md:text-left mt-16 md:mt-0">
               <h1 className="text-4xl md:text-6xl font-bold text-gray-800 dark:text-white mb-4">
                 Hey there! <br />I'm Vishnu 👋
               </h1>
@@ -124,42 +138,41 @@ const AnimatedLandingPage = () => {
                 Thanks for stopping by
               </p>
               <button
-                onClick={() => scrollToSection('about')}
+                onClick={() => document.getElementById('about').scrollIntoView({ behavior: 'smooth' })}
                 className="mt-8 text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors"
               >
                 Keep scrolling to explore my story ↓
               </button>
             </div>
-            <div className="hidden md:block">
+            <div className="block w-full md:w-auto">
               {renderTechIcon()}
             </div>
           </div>
         </div>
       </section>
 
-
-
-      {/* Rest of the sections remain unchanged */}
       {/* About Section */}
       <section 
         id="about" 
-        className={`h-screen flex items-center justify-center snap-start bg-white dark:bg-gray-800 transition-all duration-1000 ${
+        className={`min-h-screen flex items-center justify-center bg-white dark:bg-gray-800 transition-all duration-500 ${
           isIntersecting.about ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
         <div className="max-w-4xl mx-auto p-8 text-center">
           <div className="flex flex-col items-center gap-8">
             <img 
-              src="/api/placeholder/150/150"
+              src={profileImageError ? "/api/placeholder/150/150" : profileImagePath}
               alt="Profile" 
-              className="rounded-full w-32 h-32 md:w-40 md:h-40"
+              className="rounded-full w-32 h-32 md:w-40 md:h-40 object-cover"
+              onError={() => setProfileImageError(true)}
             />
             <div className="space-y-4 max-w-2xl">
               <h2 className="text-3xl font-bold text-gray-800 dark:text-white text-center">About Me</h2>
-              <p className="text-gray-600 dark:text-gray-300 text-center">
-                I'm a graduate student at Carnegie Mellon University specializing in Deep Learning and Computer Vision. 
-                My journey into engineering started with robotics system design, which gradually evolved into a passion 
-                for AI and production-ready ML systems.
+              <p className="text-gray-600 dark:text-gray-300 text-justify">
+                Hi, I'm Vishnu, a graduate student at Carnegie Mellon University specializing in Deep Learning and Computer Vision. My journey into engineering started with robotics system design, which gradually evolved into a passion for AI and production-ready ML systems. With expertise in Python and PyTorch, I've focused on making robots smarter through computer vision and machine learning – from optimizing industrial processes to developing intelligent sorting systems.
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 text-justify">
+              Currently seeking opportunities to develop products that solve real-world challenges and make an impact.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <a href="mailto:vishnuvardhan.badam@gmail.com" 
@@ -191,42 +204,43 @@ const AnimatedLandingPage = () => {
       {/* Skills Section */}
       <section 
         id="skills" 
-        className={`h-screen flex items-center justify-center snap-start bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 transition-all duration-1000 ${
+        className={`min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 transition-all duration-500 ${
           isIntersecting.skills ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
-        <div className="max-w-4xl mx-auto p-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">Skills & Interests</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-6">
+        <div className="w-full max-w-4xl mx-auto p-4 md:p-8">
+          <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4 text-center sticky top-0 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 py-4">
+            Skills & Interests
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            <div className="space-y-4">
               <div className="border-l-4 border-blue-500 pl-4 text-left">
-                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Knowledge Areas</h3>
+                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-1">Knowledge Areas</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Computer-Aided Design • Computer Vision and Perception • Machine Learning • 
-                  Machining • Controls • Robotics Programming • Automation
+                  Machine Learning • Computer Vision and Perception • Deep Learning 
+                  • Robotics Programming • Automation • New Product Design • Cooking
                 </p>
               </div>
               <div className="border-l-4 border-green-500 pl-4 text-left">
-                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Tools & Technologies</h3>
+                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Languages</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  ROS • Python • C++ • Arduino IDE • MATLAB • Git • SQL • 
-                  Fusion360 • SolidWorks • Ansys • TensorFlow • OpenCV
+                  <strong>For Computers:</strong> Python • C/C++ • JavaScript (Basic) • SQL <br />
+                  <strong>For People:</strong> English • Telugu • Hindi
                 </p>
               </div>
             </div>
+
             <div className="space-y-6">
               <div className="border-l-4 border-orange-500 pl-4 text-left">
-                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Interests</h3>
+                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Software & Frameworks</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  New Product Development • Autonomous Systems • Mechanical Design • 
-                  AI in Robotics • Manufacturing Automation • Cooking
+                  Python • C++ • ROS/ROS2 • MATLAB • OpenCV • PyTorch • TensorFlow • MoveIt • Gazebo • RViz • V-REP • Git • Docker • Kubernetes • AWS • GCP
                 </p>
               </div>
               <div className="border-l-4 border-purple-500 pl-4 text-left">
-                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Current Focus</h3>
+                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Hardware & Tools</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Deep Learning • Computer Vision • Production ML Systems • 
-                  Robotics Integration • Advanced Control Systems
+                  CAD (SolidWorks, Fusion 360) • FEA (ANSYS) • Actuator Control • Sensor Integration • Motor Drivers • Microcontroller Programming (Arduino IDE) • 3D Printing • Welding • CNC Machining
                 </p>
               </div>
             </div>
@@ -234,21 +248,79 @@ const AnimatedLandingPage = () => {
         </div>
       </section>
 
-      {/* Navigation Dots */}
-      <div className="fixed right-8 top-1/2 transform -translate-y-1/2 space-y-4">
-        {['hero', 'about', 'skills'].map((section) => (
-          <button
-            key={section}
-            onClick={() => scrollToSection(section)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              activeSection === section 
-                ? 'bg-blue-500 scale-125' 
-                : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
-            }`}
-            aria-label={`Scroll to ${section} section`}
-          />
-        ))}
-      </div>
+      {/* Projects Preview Section - Updated */}
+      <section 
+        id="projects-preview" 
+        className={`min-h-screen flex items-center justify-center bg-white dark:bg-gray-800 transition-all duration-500 ${
+          isIntersecting['projects-preview'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
+      >
+        <div className="w-full max-w-5xl mx-auto p-4 md:p-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">
+              Thanks for Reading! ✨
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            The purpose of this site is to showcase my projects and experience. Here are the relevant links to explore my work.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {/* AI Projects Card */}
+            <a href="http://localhost:3000/Portfolio/projects/all" className="group relative perspective-1000 cursor-pointer">
+              <div className="relative transform transition-all duration-500 group-hover:rotate-y-12 group-hover:scale-105">
+                <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-xl shadow-xl h-full">
+                  <div className="h-24 flex items-center justify-center mb-4">
+                    <CircuitBoard className="w-20 h-20 text-white opacity-90" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">Projects Showcase</h3>
+                  <p className="text-blue-50 text-sm">Deep learning and ML/AI projects</p>
+                </div>
+              </div>
+            </a>
+
+            {/* Experience Card */}
+            <a href="http://localhost:3000/Portfolio/resume" className="group relative perspective-1000 cursor-pointer">
+              <div className="relative transform transition-all duration-500 group-hover:rotate-y-12 group-hover:scale-105">
+                <div className="bg-gradient-to-br from-purple-500 to-pink-600 p-6 rounded-xl shadow-xl h-full">
+                  <div className="h-24 flex items-center justify-center mb-4">
+                    <Briefcase className="w-20 h-20 text-white opacity-90" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">Experience</h3>
+                  <p className="text-purple-50 text-sm">My professional journey and achievements</p>
+                </div>
+              </div>
+            </a>
+
+            {/* Hardware Projects Card */}
+            <a href="http://localhost:3000/Portfolio/hardware-projects" className="group relative perspective-1000 cursor-pointer">
+              <div className="relative transform transition-all duration-500 group-hover:rotate-y-12 group-hover:scale-105">
+                <div className="bg-gradient-to-br from-green-500 to-teal-600 p-6 rounded-xl shadow-xl h-full">
+                  <div className="h-24 flex items-center justify-center mb-4">
+                    <Wrench className="w-20 h-20 text-white opacity-90" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">Hardware Hobbies</h3>
+                  <p className="text-green-50 text-sm">Mechanical Systems & Hands-on Builds</p>
+                </div>
+              </div>
+            </a>
+
+            {/* Proudest Contributions Card */}
+            <a href="#" className="group relative perspective-1000 cursor-pointer">
+              <div className="relative transform transition-all duration-500 group-hover:rotate-y-12 group-hover:scale-105">
+                <div className="bg-gradient-to-br from-yellow-500 to-orange-600 p-6 rounded-xl shadow-xl h-full">
+                  <div className="h-24 flex items-center justify-center mb-4">
+                    <Star className="w-20 h-20 text-white opacity-90" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">Proudest Contributions</h3>
+                  <p className="text-yellow-50 text-sm">Impactful Projects</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </section>
     </div>
   );
 };
