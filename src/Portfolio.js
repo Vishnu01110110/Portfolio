@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { 
   Mail, Github, Linkedin, FileText, Sun, Moon, Send, Phone, Menu 
@@ -15,20 +15,26 @@ import ResumePage from './ResumePage';
 const Portfolio = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const [currentSection, setCurrentSection] = useState('hero');
-  const navigate = useNavigate();
-  const location = useLocation();
   const [darkMode, setDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [navHeight, setNavHeight] = useState(0);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const navRef = useRef(null);
 
   useEffect(() => {
     document.title = "Vishnu's Portfolio";
-    
-    // Set current page based on location
     const path = location.pathname.split('/')[1] || 'home';
     setCurrentPage(path);
   }, [location.pathname]);
 
-  // Listen for section changes from AnimatedLandingPage
+  // Measure nav height (update when mobile menu toggles or route changes)
+  useEffect(() => {
+    if (navRef.current) {
+      setNavHeight(navRef.current.getBoundingClientRect().height);
+    }
+  }, [isMobileMenuOpen, location.pathname]);
+
   const handleSectionChange = (section) => {
     setCurrentSection(section);
   };
@@ -54,17 +60,15 @@ const Portfolio = () => {
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
       {showNavigation && (
-        <nav className="bg-white dark:bg-gray-800 shadow-md p-4 sticky top-0 z-50">
+        <nav ref={navRef} className="bg-white dark:bg-gray-800 shadow-md p-4 sticky top-0 z-50">
           <div className="max-w-6xl mx-auto flex justify-between items-center">
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Vishnu Vardhan Badam</h1>
-            
             <button 
               className="md:hidden text-gray-600 dark:text-gray-300"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               <Menu className="h-6 w-6" />
             </button>
-
             <div className="hidden md:flex items-center space-x-4">
               <button 
                 onClick={() => {
@@ -112,7 +116,6 @@ const Portfolio = () => {
             </div>
           </div>
 
-          {/* Mobile menu dropdown */}
           {isMobileMenuOpen && (
             <div className="md:hidden mt-4">
               <button 
@@ -158,7 +161,6 @@ const Portfolio = () => {
                 Experience
               </button>
               
-              {/* Mobile dark mode toggle */}
               <div className="border-t border-gray-200 dark:border-gray-700 pt-2 mt-2">
                 <div className="flex items-center justify-between px-4 py-2">
                   <span className="text-gray-600 dark:text-gray-300">Theme toggle</span>
@@ -170,11 +172,9 @@ const Portfolio = () => {
         </nav>
       )}
 
-      <main className={`${isHardwarePage ? '' : 'mx-auto'} ${
-        !isHardwarePage && currentPage === 'home' ? '' : 'max-w-6xl p-4 md:p-8'
-      }`}>
+      <main className={`${isHardwarePage ? '' : 'mx-auto'} ${!isHardwarePage && currentPage === 'home' ? '' : 'max-w-6xl p-4 md:p-8'}`}>
         <Routes>
-          <Route path="/" element={<AnimatedLandingPage onSectionChange={handleSectionChange} />} />
+          <Route path="/" element={<AnimatedLandingPage navHeight={navHeight} onSectionChange={handleSectionChange} />} />
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/projects/all" element={<AllProjects />} />
           <Route path="/projects/:id" element={<ProjectDetails />} />
@@ -193,8 +193,7 @@ const Portfolio = () => {
               href="https://www.linkedin.com/messaging/compose/?to=badam-vishnu-vardhan"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 
-                       text-white font-medium rounded-lg transition-colors duration-200"
+              className="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
             >
               <span>Say Hi</span>
               <Send className="ml-2 h-6 w-6" />

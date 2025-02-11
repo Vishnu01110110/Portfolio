@@ -15,7 +15,7 @@ import {
   Code
 } from 'lucide-react';
 
-const AnimatedLandingPage = (props) => {
+const AnimatedLandingPage = ({ navHeight = 0, onSectionChange }) => {
   const baseUrl = process.env.PUBLIC_URL || '';
   const profileImagePath = `${baseUrl}/profile.jpg`;
   const [profileImageError, setProfileImageError] = useState(false);
@@ -31,7 +31,6 @@ const AnimatedLandingPage = (props) => {
   useEffect(() => {
     const observers = {};
     const sections = ['hero', 'about', 'skills', 'projects-preview'];
-
     sections.forEach((section) => {
       const element = document.getElementById(section);
       if (element) {
@@ -43,9 +42,7 @@ const AnimatedLandingPage = (props) => {
             }));
             if (entry.isIntersecting) {
               setActiveSection(section);
-              if (props.onSectionChange) {
-                props.onSectionChange(section);
-              }
+              onSectionChange && onSectionChange(section);
             }
           },
           { threshold: 0.5 }
@@ -53,11 +50,9 @@ const AnimatedLandingPage = (props) => {
         observers[section].observe(element);
       }
     });
-
     const interval = setInterval(() => {
       setActiveIcon((prev) => (prev + 1) % 6);
     }, 1500);
-
     return () => {
       sections.forEach((section) => {
         if (observers[section]) {
@@ -66,8 +61,9 @@ const AnimatedLandingPage = (props) => {
       });
       clearInterval(interval);
     };
-  }, [props.onSectionChange]);
+  }, [onSectionChange]);
 
+  // Modify the container to be left-aligned on mobile, centered on medium screens+
   const renderTechIcon = () => {
     const icons = [
       <Bot key="bot" className="w-24 h-24 md:w-48 md:h-48 text-blue-500 dark:text-blue-400" />,
@@ -79,8 +75,8 @@ const AnimatedLandingPage = (props) => {
     ];
 
     return (
-      <div className="relative w-32 h-32 md:w-64 md:h-64 flex items-center justify-center">
-        <div className="absolute inset-0 flex items-center justify-center">
+      <div className="relative w-32 h-32 md:w-64 md:h-64 flex items-center justify-start md:justify-center">
+        <div className="absolute inset-0 flex items-center justify-start md:justify-center">
           {icons[activeIcon]}
         </div>
         <div className="absolute inset-0">
@@ -91,13 +87,11 @@ const AnimatedLandingPage = (props) => {
     );
   };
 
-  // Assuming your toolbar is 64px tall.
-  const sectionHeight = { height: "calc(100vh - 72px)" };
+  // Use dynamic navHeight for available section height.
+  const sectionHeight = { height: `calc(100vh - ${navHeight}px)` };
 
   return (
-    // Outer container: use our computed height so that the toolbar isn’t causing inner scroll.
     <div style={sectionHeight} className="overflow-y-auto snap-y snap-mandatory">
-      
       {/* HERO SECTION */}
       <section 
         id="hero" 
