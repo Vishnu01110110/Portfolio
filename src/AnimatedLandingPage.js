@@ -8,7 +8,12 @@ import {
   Mail, 
   Github, 
   Linkedin, 
-  Phone 
+  Phone,
+  Bot,
+  GraduationCap,
+  Laptop,
+  Globe,
+  Code
 } from 'lucide-react';
 
 const AnimatedLandingPage = (props) => {
@@ -39,7 +44,6 @@ const AnimatedLandingPage = (props) => {
             }));
             if (entry.isIntersecting) {
               setActiveSection(section);
-              // Notify parent component about section change
               props.onSectionChange?.(section);
             }
           },
@@ -49,10 +53,9 @@ const AnimatedLandingPage = (props) => {
       }
     });
 
-    // Animation interval for morphing icons
     const interval = setInterval(() => {
-      setActiveIcon((prev) => (prev + 1) % 4);
-    }, 3000);
+      setActiveIcon((prev) => (prev + 1) % 6);
+    }, 1500);
 
     return () => {
       sections.forEach(section => {
@@ -64,52 +67,20 @@ const AnimatedLandingPage = (props) => {
     };
   }, [props.onSectionChange]);
 
-  // Remove the scrollToSection function as it's no longer needed
-
-  // Simplify scrolling behavior by removing the wheel event handler
-  // and allowing natural scrolling
-
   const renderTechIcon = () => {
     const icons = [
-      // Brain icon for AI/ML
-      <path
-        d="M50,20 C70,20 85,35 85,55 C85,75 70,90 50,90 C30,90 15,75 15,55 C15,35 30,20 50,20 M35,45 L65,45 M35,65 L65,65"
-        className="stroke-current"
-        fill="none"
-        strokeWidth="4"
-      />,
-      // Computer/Laptop icon
-      <path
-        d="M25,30 L75,30 L75,60 L25,60 Z M20,60 L80,60 L85,70 L15,70 Z"
-        className="stroke-current"
-        fill="none"
-        strokeWidth="4"
-      />,
-      // Robot icon
-      <path
-        d="M40,20 L60,20 L60,35 L40,35 Z M30,35 L70,35 L70,75 L30,75 Z M45,75 L55,75 L55,85 L45,85 Z"
-        className="stroke-current"
-        fill="none"
-        strokeWidth="4"
-      />,
-      // Code icon
-      <path
-        d="M35,40 L25,50 L35,60 M65,40 L75,50 L65,60 M55,30 L45,70"
-        className="stroke-current"
-        fill="none"
-        strokeWidth="4"
-      />
+      <Bot className="w-48 h-48 text-blue-500 dark:text-blue-400" />,
+      <GraduationCap className="w-48 h-48 text-blue-500 dark:text-blue-400" />,
+      <Laptop className="w-48 h-48 text-blue-500 dark:text-blue-400" />,
+      <Wrench className="w-48 h-48 text-blue-500 dark:text-blue-400" />,
+      <Code className="w-48 h-48 text-blue-500 dark:text-blue-400" />,
+      <Globe className="w-48 h-48 text-blue-500 dark:text-blue-400" />
     ];
 
     return (
       <div className="relative w-64 h-64">
         <div className="absolute inset-0 flex items-center justify-center">
-          <svg 
-            viewBox="0 0 100 100" 
-            className="w-48 h-48 text-blue-500 dark:text-blue-400 transition-transform duration-500 transform"
-          >
-            {icons[activeIcon]}
-          </svg>
+          {icons[activeIcon]}
         </div>
         <div className="absolute inset-0">
           <div className="absolute w-48 h-48 bg-blue-100/50 dark:bg-blue-900/30 rounded-full right-0 top-0 animate-pulse" />
@@ -120,11 +91,10 @@ const AnimatedLandingPage = (props) => {
   };
 
   return (
-    <div className="h-screen overflow-y-auto scroll-smooth">
-      {/* Hero Section */}
+    <div className="h-screen overflow-y-auto scroll-smooth snap-y snap-mandatory">
       <section 
         id="hero" 
-        className={`h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 transition-opacity duration-500 ${
+        className={`h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 transition-opacity duration-500 snap-start ${
           isIntersecting.hero ? 'opacity-100' : 'opacity-0'
         }`}
       >
@@ -151,10 +121,9 @@ const AnimatedLandingPage = (props) => {
         </div>
       </section>
 
-      {/* About Section */}
       <section 
         id="about" 
-        className={`min-h-screen flex items-center justify-center bg-white dark:bg-gray-800 transition-all duration-500 ${
+        className={`min-h-screen flex items-center justify-center bg-white dark:bg-gray-800 transition-all duration-500 snap-start ${
           isIntersecting.about ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
@@ -201,10 +170,9 @@ const AnimatedLandingPage = (props) => {
         </div>
       </section>
 
-      {/* Skills Section */}
       <section 
         id="skills" 
-        className={`min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 transition-all duration-500 ${
+        className={`min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 transition-all duration-500 snap-start ${
           isIntersecting.skills ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
@@ -248,10 +216,9 @@ const AnimatedLandingPage = (props) => {
         </div>
       </section>
 
-      {/* Projects Preview Section - Updated */}
       <section 
         id="projects-preview" 
-        className={`min-h-screen flex items-center justify-center bg-white dark:bg-gray-800 transition-all duration-500 ${
+        className={`min-h-screen flex items-center justify-center bg-white dark:bg-gray-800 transition-all duration-500 snap-start ${
           isIntersecting['projects-preview'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
@@ -266,8 +233,19 @@ const AnimatedLandingPage = (props) => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-            {/* AI Projects Card */}
-            <a href="http://localhost:3000/Portfolio/projects/all" className="group relative perspective-1000 cursor-pointer">
+            <a href="#" className="group relative perspective-1000 cursor-pointer">
+              <div className="relative transform transition-all duration-500 group-hover:rotate-y-12 group-hover:scale-105">
+                <div className="bg-gradient-to-br from-yellow-500 to-orange-600 p-6 rounded-xl shadow-xl h-full">
+                  <div className="h-24 flex items-center justify-center mb-4">
+                    <Star className="w-20 h-20 text-white opacity-90" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">Proudest projects</h3>
+                  <p className="text-yellow-50 text-sm">Significant achievements and contributions</p>
+                </div>
+              </div>
+            </a>
+
+            <a href="https://vishnu01110110.github.io/Portfolio/projects/all" className="group relative perspective-1000 cursor-pointer">
               <div className="relative transform transition-all duration-500 group-hover:rotate-y-12 group-hover:scale-105">
                 <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-xl shadow-xl h-full">
                   <div className="h-24 flex items-center justify-center mb-4">
@@ -279,8 +257,7 @@ const AnimatedLandingPage = (props) => {
               </div>
             </a>
 
-            {/* Experience Card */}
-            <a href="http://localhost:3000/Portfolio/resume" className="group relative perspective-1000 cursor-pointer">
+            <a href="https://vishnu01110110.github.io/Portfolio/resume" className="group relative perspective-1000 cursor-pointer">
               <div className="relative transform transition-all duration-500 group-hover:rotate-y-12 group-hover:scale-105">
                 <div className="bg-gradient-to-br from-purple-500 to-pink-600 p-6 rounded-xl shadow-xl h-full">
                   <div className="h-24 flex items-center justify-center mb-4">
@@ -292,8 +269,7 @@ const AnimatedLandingPage = (props) => {
               </div>
             </a>
 
-            {/* Hardware Projects Card */}
-            <a href="http://localhost:3000/Portfolio/hardware-projects" className="group relative perspective-1000 cursor-pointer">
+            <a href="https://vishnu01110110.github.io/Portfolio/hardware-projects" className="group relative perspective-1000 cursor-pointer">
               <div className="relative transform transition-all duration-500 group-hover:rotate-y-12 group-hover:scale-105">
                 <div className="bg-gradient-to-br from-green-500 to-teal-600 p-6 rounded-xl shadow-xl h-full">
                   <div className="h-24 flex items-center justify-center mb-4">
@@ -301,19 +277,6 @@ const AnimatedLandingPage = (props) => {
                   </div>
                   <h3 className="text-lg font-bold text-white mb-2">Hardware Hobbies</h3>
                   <p className="text-green-50 text-sm">Mechanical Systems & Hands-on Builds</p>
-                </div>
-              </div>
-            </a>
-
-            {/* Proudest Contributions Card */}
-            <a href="#" className="group relative perspective-1000 cursor-pointer">
-              <div className="relative transform transition-all duration-500 group-hover:rotate-y-12 group-hover:scale-105">
-                <div className="bg-gradient-to-br from-yellow-500 to-orange-600 p-6 rounded-xl shadow-xl h-full">
-                  <div className="h-24 flex items-center justify-center mb-4">
-                    <Star className="w-20 h-20 text-white opacity-90" strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-lg font-bold text-white mb-2">Proudest Contributions</h3>
-                  <p className="text-yellow-50 text-sm">Impactful Projects</p>
                 </div>
               </div>
             </a>
