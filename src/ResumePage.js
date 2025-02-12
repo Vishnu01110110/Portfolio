@@ -105,7 +105,7 @@ const ResumePage = () => {
       highlights: [
         "Led engineering assessments and contributed mechanical designs at a startup developing custom biodegradable educational kits for children. Conducted product feasibility analysis to ensure safety standards and environmental compliance while maintaining engaging design elements."
       ],
-      bgColor: "bg-yellow-50"
+      bgColor: "bg-indigo-50"
     },
     {
       company: "Team Eco Titans",
