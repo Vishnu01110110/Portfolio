@@ -63,7 +63,7 @@ const AnimatedLandingPage = ({ navHeight = 0, onSectionChange }) => {
     };
   }, [onSectionChange]);
 
-  // Modify the container to be left-aligned on mobile, centered on medium screens+
+  // Render the tech icon. On mobile, it will be left-aligned.
   const renderTechIcon = () => {
     const icons = [
       <Bot key="bot" className="w-24 h-24 md:w-48 md:h-48 text-blue-500 dark:text-blue-400" />,
@@ -76,9 +76,9 @@ const AnimatedLandingPage = ({ navHeight = 0, onSectionChange }) => {
 
     return (
       <div className="relative w-32 h-32 md:w-64 md:h-64 flex items-center justify-start md:justify-center">
-        <div className="absolute inset-0 flex items-center justify-start md:justify-center">
-          {icons[activeIcon]}
-        </div>
+        {/* Directly render the active icon (left aligned on mobile) */}
+        {icons[activeIcon]}
+        {/* Decorative circles remain absolutely positioned */}
         <div className="absolute inset-0">
           <div className="absolute w-24 h-24 md:w-48 md:h-48 bg-blue-100/50 dark:bg-blue-900/30 rounded-full right-0 top-0 animate-pulse" />
           <div className="absolute w-16 h-16 md:w-32 md:h-32 bg-indigo-100/50 dark:bg-indigo-900/30 rounded-full left-0 bottom-0 animate-pulse delay-75" />
@@ -87,11 +87,13 @@ const AnimatedLandingPage = ({ navHeight = 0, onSectionChange }) => {
     );
   };
 
-  // Use dynamic navHeight for available section height.
-  const sectionHeight = { height: `calc(100vh - ${navHeight}px)` };
+  // Use the custom viewport variable to calculate the available section height.
+  // This ensures we subtract both the navHeight and account for mobile viewport quirks.
+  const sectionHeight = { height: `calc((var(--vh, 1vh) * 100) - ${navHeight}px)` };
 
   return (
     <div style={sectionHeight} className="overflow-y-auto snap-y snap-mandatory">
+      
       {/* HERO SECTION */}
       <section 
         id="hero" 
@@ -326,7 +328,7 @@ const AnimatedLandingPage = ({ navHeight = 0, onSectionChange }) => {
         </div>
       </section>
     </div>
-  );
+  ); 
 };
 
 export default AnimatedLandingPage;

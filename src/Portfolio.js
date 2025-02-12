@@ -13,6 +13,17 @@ import ProjectDetails from './ProjectDetails';
 import ResumePage from './ResumePage';
 
 const Portfolio = () => {
+  // Set the custom viewport height variable (for mobile browsers)
+  useEffect(() => {
+    const setVh = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    setVh();
+    window.addEventListener('resize', setVh);
+    return () => window.removeEventListener('resize', setVh);
+  }, []);
+
   const [currentPage, setCurrentPage] = useState('home');
   const [currentSection, setCurrentSection] = useState('hero');
   const [darkMode, setDarkMode] = useState(false);
@@ -41,9 +52,9 @@ const Portfolio = () => {
 
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add('dark')
+      document.documentElement.classList.add('dark');
     } else {
-      document.documentElement.classList.remove('dark')
+      document.documentElement.classList.remove('dark');
     }
   }, [darkMode]);
 
