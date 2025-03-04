@@ -276,22 +276,7 @@
                 The purpose of this site is to showcase my projects and experience. Here are the relevant links to explore my work.
               </p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-              <a href="#" className="group relative perspective-1000 cursor-pointer">
-                <div className="relative transform transition-all duration-500 group-hover:rotate-y-12 group-hover:scale-105">
-                  <div className="bg-gradient-to-br from-yellow-500 to-orange-600 p-3 md:p-6 rounded-xl shadow-xl h-full flex flex-col items-center">
-                    <div className="h-16 md:h-24 flex items-center justify-center">
-                      <Star className="w-12 h-12 md:w-20 md:h-20 text-white opacity-90" strokeWidth={1.5} />
-                    </div>
-                    <h3 className="text-base md:text-lg font-bold text-white mt-2">
-                      Proudest projects
-                    </h3>
-                    <p className="text-xs md:text-sm text-yellow-50 mt-1">
-                      Significant achievements and contributions
-                    </p>
-                  </div>
-                </div>
-              </a>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 justify-center">
               <a href="https://vishnu01110110.github.io/Portfolio/projects/all" className="group relative perspective-1000 cursor-pointer">
                 <div className="relative transform transition-all duration-500 group-hover:rotate-y-12 group-hover:scale-105">
                   <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-3 md:p-6 rounded-xl shadow-xl h-full flex flex-col items-center">
@@ -302,7 +287,7 @@
                       Projects Showcase
                     </h3>
                     <p className="text-xs md:text-sm text-blue-50 mt-1">
-                      Deep learning and Machine Learning projects
+                      Machine Learning , AI projects
                     </p>
                   </div>
                 </div>

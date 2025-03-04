@@ -1,84 +1,70 @@
 export const projects = {
     hardware: [
       {
-        id: 'robot-whip-mechanism',
-        title: 'Novel Whip-like Linkage Mechanism (Do not review this project for 24696 )',
-        description: 'Automated battery removal system for Apple Daisy',
-        image: 'https://placehold.co/600x400/2563eb/ffffff?text=Robot+Mechanism',
-        caption: 'Automated battery removal system for Apple Daisy',
-        technologies: ['ROS', 'UR5', 'CAD', 'Motion Planning'],
-        overview: 'Project details coming up',
-        features: [
-          'Custom linkage mechanism design',
-          'Integrated robot control',
-          'Computer vision integration',
-          'Automated system'
-        ]
-      },
-      {
-        id: 'digital-twin-vehicle',
-        title: 'Mitigating Risks in Vehicles - A Digital Twin Framework Study',
-        description: 'IoT-based vehicle safety system using multi-layered communication approach',
-        image: `${process.env.PUBLIC_URL}/images/digital-twin.jpg`,
-        technologies: ['IoT', 'Arduino', 'Li-Fi', 'C++'],
-        objective: 'Traditional vehicle safety systems face unique challenges in countries like India, where road rules are often loosely interpreted and excessive honking is deeply ingrained in driving culture. The cacophony of constant honking creates noise pollution and reduces the effectiveness of audio-based warning systems. While similar projects have attempted to tackle road safety through conventional means, our approach develops an alternative communication framework that reduces reliance on audio signals, making it particularly suitable for high-noise traffic environments.',
+        id: 'text-to-music-generation',
+        title: 'Enhancing Text-to-Music Generation with Retrieved Audio Prompt',
+        description: 'A system that automatically identifies and leverages relevant audio samples from a curated database to guide the music generation process',
+        image: `${process.env.PUBLIC_URL}/images/music-generation.jpg`,
+        technologies: ['NLP', 'Deep Learning', 'MusicGen', 'Python', 'CLAP'],
+        objective: 'This project addresses a fundamental challenge in text-to-music generation: the inherent limitations of textual descriptions in capturing the full complexity of musical attributes. While incorporating reference audio can enhance generation quality, requiring users to manually find and provide relevant audio samples would defeat the purpose of automated music generation. We propose an automated retrieval-augmented approach that strikes a balance between these extremes.',
         methodology: {
-          intro: 'The research implemented a three-layered approach:',
-          accidentAlert: {
-            title: '1. Accident Alert Module',
+          intro: 'Our implementation enhances MusicGen\'s capabilities by integrating a retrieval-augmented generation system:',
+          baseModel: {
+            title: '1. Base Implementation with MusicGen',
             details: [
-              'Deployed IoT-based accident detection using ESP8266 NodeMCU and vibration sensors',
-              'Integrated with ThingSpeak cloud platform for real-time notifications',
-              'Calibrated for diverse road conditions and typical accident scenarios'
+              'Used pre-trained MusicGen-melody model (1.5B parameters)',
+              'Leveraged NVIDIA A100 GPU for training and generation',
+              'Standardized audio samples to 32kHz mono WAV format'
             ]
           },
-          v2vLiFi: {
-            title: '2. V2V Communication using Li-Fi',
+          retriever: {
+            title: '2. Retrieval Mechanism',
             details: [
-              'Developed LED-based data transmission system',
-              'Implemented secure high-speed communication protocols',
-              'Utilized Arduino Nano controllers and custom circuit designs'
+              'Implemented two approaches for audio retrieval',
+              'Used SentenceTransformer (all-mpnet-base-v2) for audio caption text embedding',
+              'Applied Contrastive Language-Audio Pretraining (CLAP) embeddings for direct comparison'
             ]
           },
-          gpsSystem: {
-            title: '3. GPS-based V2V Communication',
+          audioConditioning: {
+            title: '3. Audio Conditioning',
             details: [
-              'Created location-aware vehicle communication system',
-              'Integrated GPS modules with communication framework',
-              'Implemented real-time position tracking and data exchange'
+              'Retrieved reference audio directly conditions the MusicGen model through chroma features',
+              "Maintained musical coherence while following text prompt's semantic guidance",
+              'Implemented top-k selection (k=1) to avoid quality degradation from audio merging'
             ]
           }
         },
         results: {
-          intro: 'The system demonstrated significant achievements in three key areas:',
+          intro: 'Our evaluation revealed notable differences in performance compared to baseline models:',
           achievements: [
-            'The Accident Alert Module achieved 92% accuracy in detecting and reporting incidents',
-            'The Li-Fi V2V Communication Module established reliable data transmission up to 20 meters',
-            'The GPS-based module successfully tracked and communicated vehicle positions in real-time'
+            'Improved CLAP score showing better adherence to text prompts',
+            'Enhanced musical coherence and style consistency without additional user effort',
+            'Successfully bridged the gap between text-only approaches and manual audio conditioning'
           ]
         },
         discussion: {
           mainPoints: [
-            'Providing silent but effective vehicle-to-vehicle communication',
-            'Maintaining functionality in noise-polluted environments',
-            'Offering a scalable solution for various vehicle types'
+            'RAG-based model demonstrated improved performance on text adherence metrics',
+            'Model struggled with generating vocal elements despite text prompts mentioning singing',
+            'Retrieved audio provided additional contextual information, compensating for knowledge gaps'
           ],
           futureWork: [
-            'Integration with Think Speak cloud platform for digital twin framework',
-            'Enhanced mechanical integration of all modules',
-            'Extended testing in varied environmental conditions'
+            'Development of a comprehensive web interface for systematic human evaluation',
+            'Exploration of sophisticated multi-sample conditioning strategies',
+            'Evaluation with larger variants of MusicGen and other state-of-the-art models',
+            'Systematic investigation of how increasing the RAG dataset size affects generation quality'
           ]
         },
-        personalContribution: 'As the lead researcher on this project, I was responsible for circuit design and Arduino code implementation across all three modules. I conducted comprehensive efficiency surveys and managed the integration testing phase under various traffic conditions. The project successfully demonstrated the viability of using alternative communication methods for vehicle safety systems while maintaining cost-effectiveness and reliability.',
+        personalContribution: 'As part of the team  at Carnegie Mellon University, I was involved in the implementation of the retrieval mechanism and the evaluation pipeline. I contributed to the CLAP embedding approach for audio retrieval and helped in analyzing the experimental results. The project successfully demonstrated that our approach could become a standard component in future music generation systems.',
         features: [
-          'Accident Alert Module with 92% detection accuracy',
-          'Li-Fi based V2V Communication up to 20 meters',
-          'Real-time GPS tracking and data exchange',
-          'ThingSpeak cloud platform integration',
-          'Silent but effective vehicle-to-vehicle communication',
-          'Noise-pollution resistant framework'
+          'Automated retrieval-augmented generation system',
+          'Dual-approach retrieval mechanism (text embedding and CLAP embedding)',
+          'Enhanced text adherence in generated music',
+          'Improved musical coherence and style consistency',
+          'Web demo page showcasing generated samples',
+          'Comprehensive evaluation using FAD, KL Divergence, and CLAP score metrics'
         ],
-        challenges: 'The main challenge was developing a reliable alternative to traditional audio-based warning systems that could function effectively in noise-polluted environments while maintaining cost-effectiveness. This was addressed through a multi-layered approach combining IoT, Li-Fi, and GPS technologies.'
+        challenges: 'The main challenges included developing an effective retrieval mechanism that could find truly relevant audio samples from a limited database and addressing the model\'s limitations in generating certain audio elements like vocals. We also faced the challenge of balancing between improving text adherence while maintaining audio quality, as revealed by the trade-offs in our evaluation metrics.'
       }
     ],
     software: [
